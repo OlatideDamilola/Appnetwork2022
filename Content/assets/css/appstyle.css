@@ -1,0 +1,69 @@
+﻿
+@import url(myStyle.min.css);
+/*@import url(emojionearea.min.css);
+*/
+.bg-overlay {
+    position: relative;
+    z-index: 2;
+    background-position: center center;
+    background-size: cover; }
+.bg-overlay::after {
+    background-color: rgba(0,0,0, 0.8);
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";  }
+
+.bgView {
+    background: url(../images/APNbg.jpg) no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    position: relative;
+    /*min-height: 100vh;*/
+}
+
+.noDeco {
+    text-decoration: none;
+}
+.matInput {
+    border: none;
+    border-bottom: 2px #dfdfdf solid;
+    width: 100%;
+    color: darkgray;
+    padding-bottom: 8px;
+    background-color: transparent;
+    outline: none;
+    display: block;
+}
+
+.divBanner {
+            font-size: 30px;
+        }
+
+
+        @media screen and (min-width: 576px) {
+            .divBanner {
+                font-size: 30px;
+            }
+        }
+        @media screen and (min-width: 768px) {
+            .divBanner {
+                font-size: 30px;
+                margin-bottom: -40px;
+                z-index: 1;
+            }
+        }
+        @media screen and (min-width: 992px) {
+            .divBanner {
+                font-size: 40px;
+                margin-bottom: -40px;
+                z-index: 1;
+            }
+        }
+

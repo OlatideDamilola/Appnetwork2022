@@ -1,0 +1,354 @@
+﻿@using Appnetwork2022.Models
+@*@model.Appnetwork2022.Models.personalAcctDetails*@
+@{
+    personalAcctDetails inData = ViewBag.vData;
+}
+<section class="container-fluid px-2 mt-3">
+    <div class="p-3 bg-white">
+        <p class="text-leader text-bold "><em>Fund Your Wallet </em></p>
+        <div class="row">
+            <div class="cell-md-8">
+                <div class="d-flex flex-row primary">
+                    <div class="d-flex flex-column">
+                        <p> <span class="mif-done  fg-red text-bold"></span> Every Appnetwork transaction are made in dollars </ p >
+                        <p> <span class="mif-done fg-red text-bold"></span>  Therefore, you can only fund your wallet with Naira equivalence of dollars at <em class="text-bold">#600 per 1USD</em></p>
+                        <p> <span class="mif-done fg-red text-bold"></span> Please note that the dollar equivalence will be deducted from your local bank account</p>                        <p>
+                            <span class="mif-done fg-red text-bold"></span> Funds deposited in your wallet can be cashed out to any local bank account or be used for any transactions
+                            (such as, payment for advert, subscription for Shareholder and Offices, wallet-wallet transfer e.t.c ) on Appnetwork limited.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-md-4">
+                <div class="border bd-red p-5">
+                    <form method="POST" action="/dashboard/FundWallet" >
+                        @Html.AntiForgeryToken()
+                        <label> <em class="text-bold">Naira</em> amount to transfer into wallet:</label>
+                        <input type="number" id="iptFW" name="iptFW" class="input-large w-100" min="600" value="600" @*onblur="if($(this).val()<600)alert('nono');"*@ required>
+                        <button id="btnFW" class="command-button icon-right warning mt-5">
+                            <span class="mif-versions icon"></span>
+                            <span class="caption">
+                                Yes, Procceed
+                                <small>Order the transfer</small>
+                            </span>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="p-3 bg-white mt-5">
+        <p class="text-leader text-bold"><em>Transfer Bonus</em></p>
+        <div class="row">
+            <div class="cell-md-6">
+                <form action="/Dashboard/WWTransfer" method="post" class="border border-2 bd-gray p-3 clear">
+                    <p class="text-muted text-bold"><em>Wallet to Wallet</em></p>
+                    <label>Beneficiary's <em class="text-bold">reference code: </em></label>
+                    <input type="text" id="wwRefrenceCode" name="wwRefrenceCode" min="8" required placeholder="Beneficiary's reference code" maxlength="8" class="input-large w-100">
+                    <label> <em class="text-bold">Naira</em> amount to transfer:</label>
+                    <input type="number" id="wwAmnt"  name="wwAmnt" placeholder="not less than #600"  class="input-large w-100" min="600">
+                    <button type="submit" id="wwBtnSub" class="warning mt-3 float-right button text-bold text-medium">Procceed</button>
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>  
+            <div class="cell-md-6 ">
+                <form  method="POST" class="border border-2 bd-gray p-3 clear">
+                    <p class="text-bold text-muted text-bold"><em>Cash out to Bank account</em></p>
+                    <div><em>Note that the Fund be transfered to the Bank account you registered with.</em></div>
+                    <label> <em class="text-bold">Naira</em> amount to transfer to your Bank account:</label>
+                    <input type="number" name="coFund" id="coFIpt" placeholder="not less than #600" required class="input-large w-100"  min="600">
+                    <div class="clear py-3">
+                        <button type="submit" name="btnCashout" formaction="/Dashboard/CashoutFund" class="warning float-right button text-bold text-medium">Procceed</button>
+                    </div>
+                    @Html.AntiForgeryToken()
+                    <div data-role="panel" data-title-caption="<em class='text-bold'>Pending Cash-out</em>" data-collapsible="true" data-collapsed="true" data-title-icon="<span class='mif-apps'></span>">
+                        <div style="max-height:350px; overflow:scroll;">
+                            <table class="table table-border compact">
+                                <thead><tr> <th>#</th> <th>Amount ($)</th> <th>Date</th> <th>Status</th> </tr> </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Pending</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 bg-white">
+        <div class="p-3">
+            <div class="clear">
+                <p class="text-leader2 text-bold float-left "><em>Wallet History</em></p>
+                <div class="float-right">
+                    <div class="d-flex flex-column p-2">
+                        <span class="text-secondary m-0 ">Avaialable Ballance</span>
+                        <span class="display1 m-0">$@ViewBag.walletBallence</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row bg-grayWhite p-1 pt-3 ">
+                <div class="cell-md-6">
+                    <div data-role="panel" data-title-caption="<em class='text-bold'>Funding</em>" data-collapsible="true" data-collapsed="true" data-title-icon="<span class='mif-apps'></span>">
+                        <div class="clear">
+                            @*<p class="h5 text-muted float-left "><em>Funding</em></p>*@
+                            <div class="float-right">
+                                <div class="d-flex flex-column p-2">
+                                    <span class="text-secondary m-0 ">Total</span>
+                                    <span class="h6 m-0">$2058</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="max-height:350px; overflow:scroll;">
+                            <table class="table striped cell-border">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Amount ($)</th>
+                                        <th>Date</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell-md-6">
+                    <div data-role="panel" data-title-caption="<em class='text-bold'>Bonus</em>" data-collapsible="true" data-collapsed="true" data-title-icon="<span class='mif-apps'></span>">
+                        <div class="clear">
+                            <div class="float-right">
+                                <div class="d-flex flex-column p-2">
+                                    <span class="text-secondary m-0 ">Total</span>
+                                    <span class="h6 m-0">$2058</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="max-height:350px; overflow:scroll;">
+                            <table class="table striped cell-border">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Amount ($)</th>
+                                        <th>Date</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row bg-grayWhite p-1 pt-3 ">
+                <div class="cell-md-6">
+                    <div data-role="panel" data-title-caption="<em class='text-bold'>Transfer</em>" data-collapsible="true" data-collapsed="true" data-title-icon="<span class='mif-apps'></span>">
+                        <div class="clear">
+                            <div class="float-right">
+                                <div class="d-flex flex-column p-2">
+                                    <span class="text-secondary m-0 ">Total</span>
+                                    <span class="h6 m-0">$2058</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="max-height:350px; overflow:scroll;">
+                            <table class="table striped cell-border">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Amount ($)</th>
+                                        <th>Date</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell-md-6">
+                    <div data-role="panel" data-title-caption="<em class='text-bold'>Subscription</em>" data-collapsible="true" data-collapsed="true" data-title-icon="<span class='mif-apps'></span>">
+                        <div class="clear">
+                            <div class="float-right">
+                                <div class="d-flex flex-column p-2">
+                                    <span class="text-secondary m-0 ">Total</span>
+                                    <span class="h6 m-0">$2058</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="max-height:350px; overflow:scroll;">
+                            <table class="table striped cell-border">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Amount ($)</th>
+                                        <th>Date</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>200</td>
+                                        <td>20/11/2021</td>
+                                        <td>Shareholders subscription</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hdMsg" value="@ViewBag.inMsg" />
+
+</section>
+
+
+
+
+<script src="~/Content/assets/js/myScript.min.js"></script>
+<script>
+
+    //function myFunction() {
+    //    alert($('#kk').val(dval));
+    //    //alert(val);
+    //}
+
+    $(function () {
+
+        $('#wwBtnSub').click(function () {
+            if ($('#wwRefraCode').val().toString().length < 8) {
+                alert('Referal code can not be less than 8 characters');
+                event.preventDefault();
+            }
+            if($('#wwAmnt').val() < 600) {
+                alert('You can not transfer an amount less than #600');
+                event.preventDefault();
+            }
+             //event.stopPropagation();
+        });
+
+        //$('#btnFW').click(function () {
+        //    alert('here');
+           
+        //    alert(parseInt(("#iptF").val()));
+            
+        //    if (('#iptF').val() < 700) {
+        //        alert('You can not process an amount less than 1USD (#600)');
+        //        e.preventDefault(); e.stopPropagation();
+        //    }
+
+        //});
+        //Metro.dialog.open('#dBoardDlb');
+    });
+
+
+    
+</script>

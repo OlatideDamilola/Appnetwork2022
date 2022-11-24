@@ -1,0 +1,93 @@
+﻿@using Appnetwork2022.Models
+@{
+    personalAcctDetails pData = ViewBag.vData;
+}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="theme-color" content="#0077a3" />
+    <link href="~/Content/assets/css/appstyle.css" rel="stylesheet" />
+</head>
+<body class="m4-cloak bg-lightGray">
+    <div id="chm" data-role="charms" data-position="left" data-on-open="doShift();" data-on-close="doClose();" class="bg-darkBlue pl-0 pr-1 pt-0 pb-0">
+        <ul class="sidenav-m3 fg-black">
+            <li class="title d-flex flex-row bg-darkBlue">
+                <img src="~/Images/@pData.pixName" class="border-radius-half border border-3 bd-darkGray" style="height:60px;width:60px;" />
+                <div class=" pt-3 pl-2 text-bold fg-white text-secondary ">
+                    <div>@pData.sName</div>
+                    <div>@pData.oName</div>
+                </div>
+            </li>
+            <li class="title d-flex flex-column">
+                <span class="text-small smx-auto">Reference Code</span>
+                <span class="text-bold">@pData.referenceCode</span>
+            </li>
+            <li class="stick-right bg-red action"><a href="#" class="text-bold"><span class="mif-dashboard icon"></span>Dashboard</a></li>
+            <li><a href="/Dashboard/Wallet"><span class="mif-folder icon"></span>Wallet</a></li>
+            <li><a href="/Dashboard/Advert"><span class="mif-feed icon"></span>Advert</a></li>
+            @*<li>
+            <a class=" dropdown-toggle" href="#"><span class="mif-folder icon"></span>Wallet </a>
+            <ul class="d-menu" data-role="dropdown" style="display: none;">
+                <li><a href="/Dashboard/Wallet"> Fund wallet </a></li>
+                <li><a href="">Transfer fund</a></li>
+            </ul>
+        </li>*@
+            @*<li>
+            <a class=" dropdown-toggle" href="#"><span class="mif-ac_unit icon"></span>Referer</a>
+            <ul class="d-menu" data-role="dropdown" style="display: none;">
+                <li><a href="#"> Referer Bonus </a></li>
+                <li><a href="">Referer Award</a></li>
+            </ul>
+        </li>*@
+            <li class="title"> Navigators</li>
+            <li><a href="/Home"><span class="mif-home"></span> Home</a></li>
+            <li><a href="/Logout"><span class="mif-reply"></span> Logout</a></li>
+        </ul>
+    </div>
+
+    <div id="mainCont">
+        <div class="d-flex flex-row flex-justify-between bg-darkBlue topbar z-1 pt-4">
+            <div class="text-leader text-bold fg-white"><span class="d-none-fs d-inline-md">Appnetwork -</span> <em>Dashboard</em></div>
+            <button class="button flat-button" onclick="Metro.charms.toggle('#chm');"><span class="mif-menu mif-2x fg-white"></span></button>
+        </div>
+
+        <div class="dialog" data-role="dialog" id="dBoardDlb">
+            <div class="dialog-title bg-darkBlue fg-white">Attention ! ! !</div>
+            <div class="dialog-content text-center">
+                Bassus abactors ducunt ad triticum.
+                A fraternal form of manifestation is the bliss.
+            </div>
+            <div class="dialog-actions">
+                <button class="button float-right alert js-dialog-close">Okay</button>
+                @*<button class="button float-right primary js-dialog-close">Agree</button>*@
+            </div>
+        </div>
+
+        @RenderBody()
+
+    </div>
+
+    <script>
+        function doShift() { if ($("body").width() > 425) $("#mainCont").css("padding-left", $("#chm").width()); }
+        function doClose() { $("#mainCont").css("padding-left", "0"); }
+
+        $(function () {
+            var inMsg = $("#hdMsg").val().trim();
+
+            if (inMsg != "") {
+                $(".dialog-content").text(inMsg);
+                Metro.charms.close("#chm");
+                Metro.dialog.open('#dBoardDlb');
+            }
+        });
+    </script>
+
+</body>
+</html>

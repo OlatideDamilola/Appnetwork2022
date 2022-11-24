@@ -1,0 +1,314 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign-in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0077a3" />
+    <link href="~/Content/assets/css/appstyle.css" rel="stylesheet" />
+    <script src="~/Content/assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/js/jquery.signalR-2.2.2.min.js" type="text/javascript"></script>
+    <script src="~/signalr/hubs"></script>
+    <style>
+        .Chatbox {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+            .Chatbox::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+        .darker {
+            border-color: #ccc;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body class="m4-cloak h-vh-100">
+
+    <div id="navW" data-role="navview" data-expand="md" data-compact="fs">
+        <div class="navview-pane bg-darkBlue">
+            <button class="pull-button">
+                <span class="mif-users fg-white"></span>
+            </button>
+            <div class="suggest-box">
+                <input type="text" data-role="input" placeholder="Universal search" data-clear-button="false" data-search-button="true">
+                <button class="holder">
+                    <span class="mif-search"></span>
+                </button>
+            </div>
+            <ul class="navview-menu">
+                <li class="item-separator bg-darkBlue d-none-fs d-block-md"> <hr /></li>
+                <li class="item-header bg-darkBlue fg-white"><span class="mif-broadcast fg-blacsk"></span>  Universal friends</li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <img src="~/Content/assets/images/meme.jpg" class="border-radius-half" />
+                        </span>
+                        <span class="caption">Olawale Oluwafemi</span>
+                        <div class="badges">
+                            <span class="badge inline bg-green fg-white">10</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <img src="~/Content/assets/images/meme.jpg" class="border-radius-half" />
+                        </span>
+                        <span class="caption">Olawale Oluwafemi</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <img src="~/Content/assets/images/meme.jpg" class="border-radius-half" />
+                        </span>
+                        <span class="caption">Olawale Oluwafemi</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <img src="~/Content/assets/images/meme.jpg" class="border-radius-half" />
+                        </span>
+                        <span class="caption">Olawale Oluwafemi</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <img src="~/Content/assets/images/meme.jpg" class="border-radius-half" />
+                        </span>
+                        <span class="caption">Olawale Oluwafemi</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+
+    <div class="navview-content">
+    <div id="topBa" class="d-flex flex-row flex-justify-between bg-darkBlue topbar z-1 pt-4">
+        <div class="text-leader2 text-bold fg-white pl-1">Universal Chat@*@ViewBag.chatUser.oName*@</div>
+        <div class="d-flex flex-row ">
+            <div class="multi-action">
+                <img onclick="$(this).toggleClass('active')" src="~/Content/assets/images/APNlogo.png"
+                     class=" action-button c-pointer border-radius-half mx-2 border border-3 bd-darkGray" style="max-width:40px; max-height:40px;" />
+                <ul class="actions drop-left second">
+                    <li class="bg-teal second"><a href="#"><span class="mif-phone"></span></a></li>
+                    <li class="bg-pink second"><a href="#"><span class="mif-video-camera"></span></a></li>
+                    <li class="bg-orange second"><a href="#"><span class="mif-search"></span></a></li>
+                </ul>
+            </div>
+
+            <a href="#" id="togMenu"><span class="mif-more-vert mif-3x fg-white mr-4"></span></a>
+            <ul class="d-menu context" data-role="dropdown" data-toggle-element="#togMenu">
+                    <li><a href="#"><span class="mif-user icon"></span> Profile</a></li>
+                    <li><a href="#"><span class="mif-notification icon"></span>Notification</a></li>
+                    <li><a href="#"><span class="mif-home icon"></span>Home</a></li>
+                    <li><a href="#"><span class="mif-chat icon"></span>Chats</a></li>
+                    <li><a href="#"><span class="mif-featured-video icon"></span>Live</a></li>
+                    <li><a href="#"><span class="mif-cart icon"></span>Markets</a></li>
+                    <li><a href="#"><span class="mif-library icon"></span>Offices</a></li>
+                    <li><a href="#"><span class="mif-video-camera icon"></span>Videos</a></li>
+                    <li><a href="#"><span class="mif-camera icon"></span>Images</a></li>
+                    <li><a href="#"><span class="mif-volume-high icon"></span>Adverts</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><span class="mif-target icon"></span> revserve</a></li>
+                </ul>
+        </div>
+    </div>
+
+    <div id="chatPlane" style="height:79%;overflow-y:scroll;">
+
+        <input type="hidden" id="Udetail" value="@*@ViewBag.chatUser.referralCode*@" />
+
+
+
+        @*<div class="container">
+            <input type="text" id="message" />
+            <input type="button" id="sendmessage" value="Send" />
+            <input type="hidden" id="displayname" />
+            <ul id="discussion">
+            </ul>
+        </div>*@
+
+        <div id="chatHistory" class="p-2 clear">
+            <div class="Chatbox w-100-fs w-75-md float-left ">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row">
+                        <img src='~/Content/assets/images/meme.jpg' class="border-radius-half mr-3" style="max-height:30px;min-height:30px;" />
+
+                        <a href="#" class="text-bold fg-darkBlue text-smalsl noDeco flex-self-end">Olaniran Ifeoluwa</a>
+                    </div>
+                    <div class="w-100">
+                        <textarea readonly class="chatViewer c-pointer bg-transparent w-100 border-none" style="overflow:hidden; resize:none; outline:none; height:auto;">
+Hello, I am here. Let chat!! Hello, I am here. Let chat!! 
+Hello,I am here. Let chat!!
+Hello, I am here. Let chat!!
+Hello, I am here. Let chat!!
+                                    </textarea>
+                    </div>
+                    <div class="clear">
+                        <p class="text-muted float-right">12/03/2022 11:30pm</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Chatbox darker float-right w-100-fs w-75-md selected">
+                <div class="d-flex flex-column">
+                    <div class="w-100">
+                        <textarea readonly class="chatViewer c-pointer bg-transparent w-100 border-none" style="overflow:hidden; resize:none; outline:none; height:auto;">
+Hello, I am here. Let chat!! 
+Hello, I am here. Let chat!! Hello,
+I am here. Let chat!! Hello, I am here. Let chat!!
+Hello, I am here. Let chat!!
+                                    </textarea>
+                    </div>
+                    <div class="clear">
+                        <p class="text-muted float-left">11:30pm</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="liveCb" class="pt-2">
+
+            </div>
+
+
+        </div>
+    </div>
+
+            <div id="inputPane" class="mx-20-md bg-transparent" style="min-height:20%;">
+                <div class=" d-flex flex-row p-2 border border-2 border-radjius-20">
+                    <div class="d-flex flex-row w-100">
+                        <a class="noDeco"><img src="~/Content/assets/images/e.png" style="max-height:20px;max-width:20px;"></a>
+                        <textarea id="iptMsg" class="no-border bg-transparent w-100 fg-black" style="outline:none;"> start chatting...  </textarea>
+                        <a id="btnSendMsg" class="noDeco mr-2"><img src="~/Content/assets/images/sb.png" style="max-height:20px;max-width:20px;"></a>
+                        <a class="noDeco"><img src="~/Content/assets/images/f.png" style="max-height:20px;max-width:20px;"></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>  
+        <script src="~/Content/assets/js/myScript.min.js"></script>
+        <script>
+            var cData = { "pix": "", "name": "", "content": "", "country": "", "date": "", "time": "" };
+            var gData = { "cType": "", "cTent": "", "refralId": "","time":"","date":"" };
+            function generateChatbox(forRight, cParent, jData) {
+                var lCb = "<div class='Chatbox w-100-fs w-75-md float-left'>" +
+                                "<div class='d-flex flex-column'>" +
+                                    "<div class='d-flex flex-row'>" +
+                                        "<img src='/Images/"+ cData.pix + "'" + "class='border-radius-half mr-3' style='max-height:30px;min-height:30px;'/>" +
+                                        "<a href='#' class='text-bold fg-darkBlue text-smalsl noDeco flex-self-end'>" + cData.name + "</a>" +
+                                    "</div>" +
+                                    "<div class='w-100'>" +
+                                        "<textarea readonly class='chatViewer c-pointer bg-transparent w-100 border-none' style='overflow:hidden; resize:none; outline:none; height:auto;'>" +
+                                            cData.content +
+                                        "</textarea>" +
+                                    "</div>" +
+                                    "<div class='clear'>" +
+                                        "<p class='text-muted float-right'>" + cData.country + " " + cData.date + " " + cData.time + "</p>" +
+                                    "</div>" +
+                            "</div>" +
+                          "</div>";
+
+                var rCb = "<div class='Chatbox darker float-right w - 100 - fs w - 75 - md'>" +
+                    "<div class='d-flex flex-column'>" +
+                    "<div class='w-100'>" +
+                    "<textarea readonly class='chatViewer c-pointer bg-transparent w-100 border-none' style='overflow:hidden; resize:none; outline:none; height:auto;'>" +
+                    cData.content + " </textarea>" +
+                    "</div>" +
+                    "<div class='clear'>" +
+                    "<p class='text-muted float-right'>" + cData.country + " " + cData.date + " " + cData.time + "</p>" +
+                    "</div>" +
+                    "</div >" +
+                    "</div >";
+
+                if (forRight) m4q('#' + cParent).append(rCb);
+                else m4q('#' + cParent).append(lCb);
+                stretchIt();
+            }
+
+            function stretchIt() {
+                m4q(".chatViewer").each(function (i, el) {
+                    m4q(this).height(this.scrollHeight);
+                });
+            }
+
+            $(function () {
+                // Reference the auto-generated proxy for the hub.
+                var chat = $.connection.chatHub;
+                chat.state.userName = "Fadi Fakhouri";
+                $.connection.hub.qs = {'UID':'RTR4434343'};
+                // Create a function that the hub can call back to display messages.
+                chat.client.addNewMessageToPage = function (name, message) {
+                    // Add the message to the page.
+                    $('#discussion').append('<li><strong>' + htmlEncode(name)
+                        + '</strong>: ' + htmlEncode(message) + '</li>');
+                }; 
+                // Get the user name and store it to prepend to messages.
+                $('#displayname').val(prompt('Enter your name:', ''));
+                // Set initial focus to message input box.
+                $('#message').focus();
+                // Start the connection.
+                $.connection.hub.start().done(function () {
+                    $('#btnSendMsg').click(function () {
+                        // Call the Send method on the hub.
+                        chat.server.postMsg($('#btnSendMsg').val(), $('#iptMsg').val());
+                        // Clear text box and reset focus for next comment.
+                        $('#message').val('').focus();
+                    });
+                });
+            });
+            // This optional function html-encodes messages for display in the page.
+            function htmlEncode(value) {
+                var encodedValue = $('<div />').text(value).html();
+                return encodedValue;
+            }
+          
+
+            m4q(function () {
+                //let tHeight = document.querySelector("textarea").scrollHeight + "px";
+                //$('chatViewer').height(tHeight);
+                //$.each('chatViewer',)
+                //$("#tt").emojioneArea();
+
+                stretchIt();
+
+                var now = new Date();
+                var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+               // alert(now_utc);
+
+
+                function UpdateUTCDateTime() {
+                    var currentDate = Date.now();
+                    var currentUTCdate = currentDate.toUTCString();
+                    if (navigator.userAgent.indexOf("MSIE") < 0) {
+                        currentUTCdate = currentUTCdate.replace("GMT", "UTC");
+                    }
+                    $("#Clock").text(Date.parseExact(currentUTCdate, "ddd, dd MMM yyyy HH:mm:ss UTC").toString("dd-MMM-yyyy hh:mm tt"));
+                    setTimeout(UpdateUTCDateTime, (60 - currentDate.getSeconds()) * 1000);
+                }
+
+
+            })
+
+        </script>
+
+</body>
+</html >

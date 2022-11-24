@@ -1,0 +1,527 @@
+﻿@using Appnetwork2022.Models 
+@{
+    Layout = null;
+    personalAcctDetails inData = ViewBag.cDat;
+    
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0077a3" />
+    <link href="~/Content/assets/css/appstyle.css" rel="stylesheet" />
+    <script src="~/Content/assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/js/jquery.signalR-2.2.2.min.js" type="text/javascript"></script>
+    <script src="~/signalr/hubs"></script>
+    <style>
+        .Chatbox {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+            .Chatbox::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+        .darker {
+            border-color: #ccc;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body class="m4-cloak h-vh-100">
+
+    <div id="navW" data-role="navview" data-expand="md" data-compact="fs">
+        <div class="navview-pane bg-darkBlue">
+            <button class="pull-button">
+                <span class="mif-users fg-white"></span>
+            </button>
+            <div class="suggest-box">
+                <input type="text" data-role="input" placeholder="Universal search" data-clear-button="false" data-search-button="true">
+                <button class="holder">
+                    <span class="mif-search"></span>
+                </button>
+            </div>
+            <ul class="navview-menu">
+                <li class="item-separator bg-darkBlue d-none-fs d-block-md"> <hr /></li>
+                <li class="item-header bg-darkBlue fg-white"><span class="mif-broadcast fg-blacsk"></span>Universal friends</li>
+                @*<li>
+                    <a href="#">
+                        <span class="icon">
+                            <img src="~/Content/assets/images/meme.jpg" class="border-radius-half" />
+                        </span>
+                        <span class="caption">Olawale Oluwafemi</span>
+                        <div class="badges">
+                            <span class="badge inline bg-green fg-white">10</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <img src="~/Content/assets/images/meme.jpg" class="border-radius-half" />
+                        </span>
+                        <span class="caption">Olawale Oluwafemi</span>
+                    </a>
+                </li>*@
+                
+
+            </ul>
+        </div>
+
+
+        <div class="navview-content">
+            <div id="topBa" class="d-flex flex-row flex-justify-between bg-darkBlue topbar z-1 pt-4">
+                <div class="text-leader2 text-bold fg-white pl-1">Universal Chat@*@ViewBag.chatUser.oName*@</div> 
+                <button id="btnGo">Go</button>
+                <div class="d-flex flex-row ">
+                    <div class="multi-action">
+                        <img onclick="$(this).toggleClass('active');" src="~/Content/assets/images/@inData.pixName"
+                             class=" action-button c-pointer border-radius-half mx-2 border border-3 bd-darkGray" style="max-width:40px; max-height:40px;" />
+                        <ul class="actions drop-left second">
+                            <li class="bg-teal second"><a href="#"><span class="mif-phone"></span></a></li>
+                            <li class="bg-pink second"><a href="#"><span class="mif-video-camera"></span></a></li>
+                            <li class="bg-orange second"><a href="#"><span class="mif-search"></span></a></li>
+                        </ul>
+                    </div>
+
+                    <a href="#" id="togMenu"><span class="mif-more-vert mif-3x fg-white mr-4"></span></a>
+                    <ul class="d-menu context" data-role="dropdown" data-toggle-element="#togMenu">
+                        <li><a href="#"><span class="mif-user icon"></span> Profile</a></li>
+                        <li><a href="#"><span class="mif-notification icon"></span>Notification</a></li>
+                        <li><a href="#"><span class="mif-home icon"></span>Home</a></li>
+                        <li><a href="#"><span class="mif-chat icon"></span>Chats</a></li>
+                        <li><a href="#"><span class="mif-featured-video icon"></span>Live</a></li>
+                        <li><a href="#"><span class="mif-cart icon"></span>Markets</a></li>
+                        <li><a href="#"><span class="mif-library icon"></span>Offices</a></li>
+                        <li><a href="#"><span class="mif-video-camera icon"></span>Videos</a></li>
+                        <li><a href="#"><span class="mif-camera icon"></span>Images</a></li>
+                        <li><a href="#"><span class="mif-volume-high icon"></span>Adverts</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" id="btnDisc"><span class="mif-undo icon"></span> Exit</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="cBound" class="d-flex flex-column " style="height:87%;">
+            <div id="chatPlane" class="h-vh-100" style="max-height: 94%; overflow-y: scroll;">
+
+                <div id="chatHistory" class="p-2">
+
+                    <div id="MissedCb" class="pt-2 clear">
+
+                    </div>
+
+                    <div id="liveCb" class="pt-2 clear">
+
+                    </div>
+
+                </div>
+            </div>
+                <div id="inputPane" class="bg-darkBlue" style="position:fixed; top:50%;right:0; z-index:2;">
+                    <div class=" d-flex flex-row border border-2">
+                        <button id="btnMov" class="bg-crimson no-border fg-white alert"><<</button>
+                        <div class="d-flex flex-row m-1 border w-100 p-2 dElem ">
+                            <a class="noDeco "><img src="~/Content/assets/images/e.png" style="max-height:20px;max-width:20px;"></a>
+                            <textarea id="iptMsg" class="no-border bg-transparent w-100 fg-white" style="outline:none;">start chatting...</textarea>
+                            <a id="btnSendMsg" class="noDeco mr-2"><img src="~/Content/assets/images/sb.png" style="max-height:20px;max-width:20px;"></a>
+                            <a class="noDeco  "><img src="~/Content/assets/images/f.png" style="max-height:20px;max-width:20px;"></a>
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
+    @*<input type="hidden" id="hdDtail" value="@inData.referenceCode"/>*@
+
+    <script src="~/Content/assets/js/myScript.min.js"></script>
+    <script>
+        var el = m4q("#inputPane");
+        var pW = el.parent().width();
+        el.width(pW / 2); el.css("right", -el.width() + el.find("#btnMov").width());
+        function moveIt(elem) {             
+            var startPos = parseInt(elem.style("right"));
+            var pluB = elem.find("#btnMov").width();
+            var maxLeft = startPos === -elem.width()+pluB ? 0 : -(elem.width()-pluB);
+
+            m4q.animate(elem, {
+                right: maxLeft
+            }, 1000, function () {
+                //btn.disabled = false;
+            });
+        }
+        
+
+    
+
+
+
+
+    //alert(new Date().toUTCString()); alert(new Date().toString());
+    //var uMsgId; function getLocalDT(dtString) {
+    //    return (new Date(dtString).getTime() + (new Date().getTimezoneOffset() * 60000)).toDateString(); // datetime(dtString).addMinute(datetime().utcOffset());
+    //}
+
+    var tryRecting = false; var msgQ = []; var msgRloading = false; //var sgConStartHandler;
+    function getLocalDT(dtString) {
+        //console.log(datetime(dtString));
+        //console.log(datetime(dtString).addMinute(datetime().utcOffset()*(-1)).value);
+        return datetime(datetime(dtString).addMinute(datetime().utcOffset() * (-1)).value).format('YYYY MM-DD HH:mm A');//.toString();// datetime(dtString).addMinute(datetime().utcOffset().value.toString);
+    }
+
+    function genLchatBox(jData, cCont) {
+        m4q('#' + cCont).append(
+            "<div class='Chatbox w-100-fs w-75-md place-left'>" +
+            "<div class='d-flex flex-column'>" +
+            "<div class='d-flex flex-row'>" +
+            "<img src='/Images/" + jData.senderPix + "'" + "class='border-radius-half mr-3' style='max-height:30px;max-height:30px;'/>" +
+            "<a href='#' class='text-bold fg-darkBlue text-smalsl noDeco flex-self-end'>" + jData.senderName + "</a>" +
+            "</div>" +
+            "<div class='w-100'>" +
+            "<textarea readonly class='chatViewer c-pointer bg-transparent w-100 border-none' style='overflow:hidden; resize:none; outline:none; height:auto;'>" +
+            jData.postContent +
+            "</textarea>" +
+            "</div>" +
+            "<div class='clear'>" +
+            "<p class='text-muted float-right'>" + jData.senderCountry + " " + getLocalDT(jData.postDateTime) + "</p>" +
+            "</div>" +
+            "</div>" +
+            "</div>");
+        stretchIt();
+    }
+
+    function genRchatBox(jData, cCont, boxId = '',clsVal='') {
+        m4q('#' + cCont).append(
+            "<div id='" + boxId + "'" + "class='Chatbox darker place-right w-100-fs w-75-md selected " +clsVal+ "'>" +
+            "<div class='d-flex flex-column'>" +
+            "<div class='w-100'>" +
+            "<textarea readonly class='chatViewer c-pointer bg-transparent w-100 border-none' style='overflow:hidden; resize:none; outline:none; height:auto;'>" +
+            jData.postContent + " </textarea>" +
+            "</div>" +
+            "<div class='clear'>" +
+            "<p class='text-muted float-right'>" + getLocalDT(jData.postDateTime) + "</p>" +
+            "</div>" +
+            "</div >" +
+            "</div >");
+        stretchIt();
+    }
+
+    function addUserToList(instanUser) {
+        m4q('.navview-menu').append(
+            "<li id='" + instanUser.reference +"' class='onlUser'>" +
+            "<a href='#'>" +
+            "<span class='icon'>" +
+            "<img src='/Images/" + instanUser.pix + "'" + "class='border-radius-half'/>" +
+            "</span>" +
+            "<span class='caption text-cap text-ellipsis'>" + instanUser.name + "</span>" +
+            "</a>" +
+            "</li >"
+        );
+
+    }
+
+    function dispToastMsg(dMsg) {
+        Metro.toast.create(dMsg, Metro.noop, 7000, 'alert');
+    }
+
+        function notifyer(dMsg) {
+            var notify = Metro.notify;
+            notify.setup({
+                width: 300,
+                duration: 3000,
+                animation: 'easeOutBounce',
+                timeout: 6000
+            });
+            notify.create(dMsg, "Hello", { cls: "alert" });
+            notify.reset();
+           // notify.create("<div class='d-flex flex-row'>< img src ='/Images/" + inV.pix + "' style = 'width:60px;height:60px;' />" + inV.name+"<span class='text-bold'></span></div >");
+        }
+
+        function stretchIt() {
+            m4q(".chatViewer").each(function (i, el) {
+                m4q(this).height(this.scrollHeight);
+            });
+        }
+
+        //function doAdjust(dContainer) {
+        //    //alert('doAdjust');
+        //    var pp = parseInt(m4q("#inputPane").css("top").split('p')[0]);
+        //    var lastChildH = parseInt(m4q(dContainer).children().last().height());// alert('lastChile...'+lastChildH); alert(m4q("#inputPane").css("top").split('p')[0]);
+        //    if (lastChildH < pp) {
+        //        //alert('dsds');
+        //        m4q("#inputPane").css("top", pp - (lastChildH * 2));
+        //    }
+        //}
+
+
+    $(function () {
+        var chat = $.connection.chatHub;
+         $.connection.hub.qs = {'uRef':'@ViewBag.refchatData'};
+           // chat.state.userName = "Fadi Fakhouri";
+        registerConnectionEvents(chat);
+        registerAllClientMethods(chat);
+
+        $.connection.hub.start().done(function () {
+            registerAllEvents(chat);
+
+        });
+
+        function registerAllEvents(dChatHub) {
+            preFunction(dChatHub);
+            $('#iptMsg').val('').focus(); 
+            $('#btnDisc').click(function () {
+                $.connection.hub.stop();
+            });
+            $('#btnSendMsg').click(function () {
+               // alert('hfhfhg');
+                var toSend = $('#iptMsg').val();
+                uMsgId = m4q.uniqueId().split("-")[1];
+                var tmsg = { "fromOwner": true, "postContent": toSend, "postDateTime": '"' + new Date().toString() + '"' };
+                if (tryRecting) {
+                    genRchatBox(tmsg,"liveCb",'',"tmpMsg");
+                    msgQ.push(toSend); //alert('after push');
+                    document.getElementById('chatHistory').scrollIntoView(false);
+                    //doAdjust('#liveCb');
+                    //document.getElementById('inputPane').scrollIntoView(false);
+                }else{
+                    dChatHub.server.postMsg(toSend, uMsgId).done(function (mId) {
+                        //if (mId == uMsgId) {
+                        genRchatBox(tmsg,"liveCb");
+                        document.getElementById('chatHistory').scrollIntoView(false);
+                        //} else dispToastMsg('Unable to send your Message at this time!');
+                    }).fail(function (error) {
+                        dispToastMsg(error);
+                    });
+                }
+               $('#iptMsg').val('').focus();
+            });
+
+        }
+        function registerAllClientMethods(dChatHub) {
+            dChatHub.client.notifyConnection = function (uDetail) {
+                var inV = JSON.parse(uDetail);
+                if (!m4q('.navview-menu').contains('#' + reference)) {
+                    addUserToList(inV);
+                    notifyer(inV.name + ' joined this Chat');
+                }
+            };
+            dChatHub.client.remoteDisconnet = function () {
+
+            };
+            dChatHub.client.notifyDisconnetion = function (discInfo, discState) {
+                var inV = JSON.parse(discInfo);
+                $('#' + inV.reference).remove();
+                if (discState == true) notifyer(inV.name + " has exited this Chat.");
+                else notifyer(inV.name + " has lost connection to Chat.");
+            };
+            dChatHub.client.loadOnLineUser = function (olUser) {
+                $('.onlUser').remove();
+                jOlUser = JSON.parse(olUser);
+                for (var itr = 0; itr < jOlUser.length; itr++) {
+                    addUserToList(jOlUser[itr]);
+                }
+            }
+            dChatHub.client.reportNewMsg = function (dMsg) {
+                genLchatBox(JSON.parse(dMsg), "liveCb");
+                document.getElementById('chatHistory').scrollIntoView(false);
+             //   doAdjust('#liveCb');
+               //document.getElementById('inputPane').scrollIntoView(false);
+            }
+            dChatHub.client.reportMissedMsg = function (missedMsg) {
+                var itr = 0; var jDatas = JSON.parse(missedMsg);
+                if (msgRloading) {
+                    $('.tmpMsg').remove();
+                    for (itr = 0; itr < jDatas.length; itr++) genLchatBox(jDatas[itr], "liveCb");
+                } else {
+                    for (itr = 0; itr < jDatas.length; itr++) {
+                        if (jDatas[itr].fromOwner) genRchatBox(jDatas[itr], "MissedCb");
+                        else genLchatBox(jDatas[itr], "MissedCb");
+                       // doAdjust('#MissedCb');
+                    }
+                }
+                document.getElementById('chatHistory').scrollIntoView(false);
+               // m4q("#inputPane").css("top", 0);
+            }
+        }
+
+        function registerConnectionEvents(dChatHub) {
+            $.connection.hub.reconnecting(function () {
+                tryRecting = true;
+                dispToastMsg('Network failed! Reconnecting...');
+            });
+            $.connection.hub.reconnected(function () {
+                dispToastMsg('Reconnected!'); tryRecting = false;
+                loadNsendAfterRecon(dChatHub);
+            });
+            $.connection.hub.disconnected(function () {
+                if (tryRecting) {
+                    dispToastMsg('Reconnection attempt failed! Re-trying...');
+                    setTimeout(function () {
+                        $.connection.hub.start().done(function () {
+                            tryRecting = false;
+                            preFunction(chat);
+                        })
+                    }, 5000);
+                }
+            });
+
+        }       
+
+        function preFunction(dChatHub) {
+            dChatHub.server.verifyConnection();
+            if (msgQ.length > 0) {
+                loadNsendAfterRecon(dChatHub);
+            } else dChatHub.server.loadMissedMsg();
+        }
+
+        function loadNsendAfterRecon(dChatHub) {
+            msgRloading = true; //alert('trying resend');
+            dChatHub.server.loadMissedMsg().done(function (stBool) {
+               // alert('after laod');
+                if (stBool) {
+                   // alert('stbool laod');
+                    if(msgQ.length > 0) {
+                      //  alert('msgq lnt');
+                        var itr = 0; var mId;
+                        while ((itr < msgQ.length) && (!tryRecting)) {
+                           // alert(' resend counting');
+                            uMid = m4q.uniqueId().split("-")[2];
+                            // tmpMsg = msgQ[itr];
+                            dChatHub.server.postMsg(msgQ.shift(), uMid); itr++; //.done(function (mId) {
+                            //if (mId == uMid) { msgQ.shift(); itr++;}
+                            // })
+                        }
+                    }
+                }
+            });
+            msgRloading = false;
+        }
+              
+        });
+
+        //var preH = window.innerHeight;
+
+        //console.log('old ' + m4q("#cBound").height());
+        //// window.onresize = checkDimensions();
+        //window.addEventListener("resize", checkDimensions);
+        //function checkDimensions() {
+        //    console.log('event,,,');
+        //    // var newH = prevHeight - window.innerHeight;
+        //    // if (prevHeight > window.innerHeight) {
+        //    m4q("#cBound").height(window.innerHeight);
+        //    console.log('new ' + m4q("#cBound").height());
+        //    // }   
+        //    //m4q("#cBound").hide();
+        //    //  alert(window.innerHeight);
+        //    //  d.innerHTML = 'Window dimensions: ' + window.innerWidth + ' x ' + window.innerHeight;
+        //}
+
+        //m4q(window).on("onresize", function (e) {
+        //    console.log('heree');
+        //    //$(e.target).addClass(e.detail.cls);
+        //});
+
+        m4q(function () {
+            //let tHeight = document.querySelector("textarea").scrollHeight + "px";
+            //$('chatViewer').height(tHeight);
+            //$.each('chatViewer',)
+            //$("#tt").emojioneArea();
+            //console.log(datetime().toUTCString());
+            //console.log(datetime().utcOffset());
+            //console.log(datetime());
+            //console.log(datetime("2022-07-08 17:29:04"));
+            //console.log(datetime("2022-07-08T17:29:04").addMinute(datetime().utcOffset()));
+
+
+            $('#btnMov').click(function () {
+
+                moveIt(m4q('#inputPane'));
+
+            });
+
+
+
+            var prevH = window.innerHeight;
+
+            m4q(window).on("resize", function (e) {                
+                var newH = m4q(e.target).prop('innerHeight');
+                var contH = m4q("#cBound").height();
+                if (Metro.isTouchable && (navigator.userAgent.search("Version/")>0)) {
+                    if (newH < prevH) {
+                        m4q("#cBound").height(contH - (prevH - newH));
+                    } else if (newH > prevH) {
+                        m4q("#cBound").height(contH + (newH - prevH));
+                    }
+                }
+            });
+
+            stretchIt();
+           // m4q("#inputPane").css("top",m4q("#cBound").height());
+      
+            console.log(navigator.userAgent);
+               // m4q("#cBound").height(kk - 150);
+                //$(e.target).addClass(e.detail.cls);
+            var ele = m4q("#inputPane");
+           
+           
+            //console.log(Metro.inFullScreen());
+            console.log(Metro.isTouchable);
+
+        
+            //m4q(window).onresize(function (e) {
+            //    alert('alead');
+            //});
+
+            //m4q(window).onresize(function (e) {
+            //    alert(window.innerHeight);
+            //});
+            //ele.animate({
+            //    top: -(m4q('#chatPlane').height()/2)
+            //}, 2000,"easeInOutBounce", function () {
+            //    //btn.disabled = false;
+            //});
+            //console.log(Metro.utils.isVisible("#inputPane"));
+            //console.log(m4q.isVisible(ele));
+
+            //alert(navigator.appName);
+
+
+
+
+
+            var now = new Date();
+            var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+            // alert(now_utc);
+
+
+            function UpdateUTCDateTime() {
+                var currentDate = Date.now();
+                var currentUTCdate = currentDate.toUTCString();
+                if (navigator.userAgent.indexOf("MSIE") < 0) {
+                    currentUTCdate = currentUTCdate.replace("GMT", "UTC");
+                }
+                $("#Clock").text(Date.parseExact(currentUTCdate, "ddd, dd MMM yyyy HH:mm:ss UTC").toString("dd-MMM-yyyy hh:mm tt"));
+                setTimeout(UpdateUTCDateTime, (60 - currentDate.getSeconds()) * 1000);
+            }
+
+
+        })
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>

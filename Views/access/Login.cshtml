@@ -1,0 +1,247 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign-in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="~/Content/assets/css/appstyle.css" rel="stylesheet" />
+    <style>
+        .mySwitch .check::after {
+            background: #ffffff !important;
+            border-color: #ffffff !important;
+        }
+
+        .mySwitch input[type="checkbox"]:checked ~ .check {
+            background: transparent !important;
+        }
+
+            .mySwitch input[type="checkbox"]:checked ~ .check::after {
+                border-color: #ffffff !important;
+                background: #ffffff !important;
+            }
+
+        .ANmenu > li {
+            margin: 2px !important;
+            padding: 0px !important;
+            display: inline-block;
+        }
+
+            .ANmenu > li > a {
+                color: white;
+            }
+        
+       .curvInp {
+                outline: none;
+                border: none;
+                background: transparent;
+            }
+        .noDeco { text-decoration: none;}
+        .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+            .inputfile + label {
+                display: inline-block;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body class="bgView bg-overlay m4-cloak h-vh-100">
+    <div class="fixed-top p-5" style="z-index:1;">
+        <div class="d-flex flex-justify-between-md flex-justify-center-fs flex-row-md flex-column-fs">
+            <a href="#" class="fg-white text-bold h4 mx-auto-fs mx-0-md mb-0 noDeco">Appnetwork</a>
+            <ul class="ANmenu bg-transparent fg-white mx-auto-fs mx-0-md">
+                <li><a href="#" class="noDeco" onclick="Metro.window.toggle('#regWindow');">Sign-up</a></li>
+                <li><a href="#" class="noDeco">| Sign-in</a> </li>
+            </ul>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-justify-center h-100">
+
+        <div id="regWindow" data-role="window" data-icon="<span class='mif-user'></span>" data-gragabble="true" data-width="300" data-btn-max="false" data-btn-min="false"
+             data-height="400" class="p-3" data-place="top-left" data-title="Personal Account" data-cls-caption="bg-darkBlue" data-custom-buttons="wANbutton"
+             data-on-close-click="closeHandler">
+            <form id="pForm" action="\access\CreatePersonalAcct" method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <div class="d-flex flex-justify-center">
+                        <img src="~/Content/assets/images/avatar.png" id="pbx" style="height:223px;" />
+                    </div>
+                    <div class="d-flex flex-row">
+                        <input oninput="if(this.files[0].size>200000){alert('The size should not exceed 200kb'); }else pbx.src=window.URL.createObjectURL(this.files[0]);" type="file" id="fotoFile" name="fotoFile" class="inputfile" accept="image/*" />
+                        <label for="fotoFile" class="button bg-red fg-white" style="width:93%;"><i class="mif-upload2 mif-2x"></i>Upload Picture</label>
+                        <label class="button bg-darkRed fg-white" style="width:7%;"><span class="mif-replay mif-2x"></span></label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <input type="number" name="tbxRefcod" min="5" data-role="materialinput" placeholder="Referer code" data-label="Referer code">
+                    <input type="text" name="tbxSname" data-role="materialinput" placeholder="Surname" data-label="Surname">
+                    <input type="text" name="tbxOname" data-role="materialinput" placeholder="Other names" data-label="Other names">
+                    <input type="number" name="tbxPnum" data-role="materialinput" placeholder="Phone number" data-label="Phone number">
+                    <input type="text" name="tbxEmail" data-role="materialinput" placeholder="Email" data-label="Email">
+                    <input type="text" name="tbxcEmail" data-role="materialinput" placeholder="Confirm Email" data-label="Confirm Email">
+                    <select name="cbxGender" class="pt-2 mb-3 matInput">
+                        <option selected>Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                    <input data-role="datepicker" name="dtpDob" data-label="Date of Birth" class="mb-2">
+                    <input type="text" name="tbxOccupation" data-role="materialinput" placeholder="Occupation" data-label="Occupation">
+                    <input type="text" name="tbxReligion" data-role="materialinput" placeholder="Religion" data-label="Religion">
+                    <textarea name="txaAddrs" class="matInput" placeholder="Address"></textarea>
+                    <select name="cbxCountry" class="mt-5 matInput">
+                        <option selected">Country</option>
+                        <option>Nigeria</option>
+                        <option>Germany</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <input type="text" class="fg-crimson" name="tbxUname" data-role="materialinput" placeholder="User name" data-label="User name">
+                    <input type="text" class="fg-crimson" name="tbxPword" data-role="materialinput" placeholder="Password" data-label="Password">
+                    <input type="text" class="fg-crimson" name="tbxcPword" data-role="materialinput" placeholder="Confirm Password" data-label="Confirm Password">
+                </fieldset>
+                    <div class="clear pt-5">
+                        <button type="submit" class="button bg-red fg-white place-right">Submit</button>
+                    </div>
+            
+
+            </form>
+            <form id="bForm" action="#" method="post" style="display:none;">
+                <input type="number" data-role="materialinput" placeholder="Referer number" data-label="Referer number">
+                <input type="text" data-role="materialinput" placeholder="Enter your Business name" data-label="Business name">
+                <input type="number" data-role="materialinput" placeholder="Phone number" data-label="Phone number">
+                <input type="text" data-role="materialinput" placeholder="Email" data-label="Email">
+                <input type="text" data-role="materialinput" placeholder="Confirm Email" data-label="Confirm Email">
+                <select class="pt-3 matInput">
+                    <option class="fg-cyan">One</option>
+                    <option selected class="text-bold fg-red">Business Type</option>
+                    <option class="fg-green">Three</option>
+                </select>
+                <select class="pt-3 matInput">
+                    <option class="fg-cyan">One</option>
+                    <option selected class="text-bold fg-red">Country</option>
+                    <option class="fg-green">Three</option>
+                </select>
+                <input type="text" data-role="materialinput" placeholder="Address" data-label="Address">
+                <input type="text" data-role="materialinput" placeholder="Religion" data-label="Religion">
+
+                <div class="clear pt-5">
+                    <button type="submit" class="button bg-red fg-white place-right">Submit</button>
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div class="flex-self-center w-33-md">
+            <form action="@Url.RouteUrl("login")" method="post" stdyle="min-width: 30%;">
+                <div class="text-center fg-white">
+                    <img src="~/Content/assets/images/APNlogo.png" class="w-25" />
+                </div>
+                <div class="p-2 border mt-4 ml-5 mr-5 " style=" border-radius: 35px; background: rgba(255, 255, 255, 0.15);">
+                    <div class="d-flex flex-row fg-white">
+                        <span class="mif-user mif-2x pr-2"></span>
+                        <input type="text" class="fg-white w-100 curvInp" name="tbxUn" required placeholder="Username">
+                    </div>
+                </div>
+                <div class="p-2 border mt-8 ml-5 mr-5" style="border-radius:35px; background: rgba(255, 255, 255, 0.15);">
+                    <div class="d-flex flex-row fg-white">
+                        <span class="mif-lock mif-2x pr-2"></span>
+                        <input type="text" class="fg-white w-100 curvInp" name="tbxPw" required placeholder="Password">
+                    </div>
+                </div>
+                <div class="text-center fg-white">
+                    <button id="btnLogSub" type="submit" class="button fg-white shadowed drop-shadow border-radius-20 bg-lightRed w-75 mt-8">
+                        <span class="load-marker mif-loop2"></span>
+                        <span class="load-caption">Sign-in</span>
+                    </button>
+                </div>
+                <div class="clear fg-white mt-8 px-2-fs px-0-md">
+                    <input id="swBtn" type="checkbox" class="place-left" data-role="switch" data-on="Yes" data-off="No" data-show-on-off="true" data-caption="Keep Logged In"
+                           data-cls-switch="mySwitch" data-cls-check="bd-white mySwitch">
+                    <a href="#" class="place-right fg-white mt-2" style="text-decoration: none">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+        <div class=" clear fg-white w-100  mb-5-md fixed-bottom">
+            <div class="d-flex flex-row place-left ">
+                <a href="#" class="fg-white mr-1" style="text-decoration: none">About Us</a> |
+                <a href="#" class="fg-white mr-1 ml-1" style="text-decoration: none">Privacy Policy</a>|
+                <a href="#" class="fg-white ml-1" style="text-decoration: none">Terms Of Use</a>
+            </div>
+            <div class="place-right text-center">© 2022. All Rights Reserved | Design By Appnetwork</div>
+        </div>
+    </div>
+    @*<button id="bnt"> java</button>*@
+
+    <script src="~/Content/assets/js/myScript.min.js"></script>
+    <script>
+        var wANbutton = [
+            {
+                html: "Business",
+                cls: "alert",
+                onclick: "if($(this).text()=='Business'){$(this).text('Personal');$('.title').text('Business Account');$('#pForm').hide();$('#bForm').show(true);}else{ $(this).text('Business');$('.title').text('Personal Account');$('#pForm').show();$('#bForm').hide();}"
+            }
+        ];
+
+        function closeHandler() {
+            Metro.window.hide('#regWindow');
+            event.preventDefault();
+        }
+
+
+        $(function () {
+            var keepLog = false;
+
+            Metro.window.hide('#regWindow');
+            //Metro.window.hide('[data-role=window]');
+
+            $('#swBtn').change(function () {
+                if ($(this).is(":checked")) keepLog = true; //alert('cj');
+                else keepLog = false;  // alert('hhh');
+            })
+
+
+            $('#btnLogSub').click(function () {
+                var upcomb = $("input[name=tbxUn]").val().trim() + '`' + $("input[name=tbxPw]").val().trim();
+                $('#btnLogSub').toggleClass('loading');
+                if (keepLog) Metro.storage.setItem("anpd", upcomb);
+            })
+
+
+
+
+
+            $('#bnt').on("click", function () {
+
+                var el = $("#dForm");
+                var startPos = parseInt(el.style("right"));
+                // alert(startPos);
+                var maxLeft = startPos === 0 ? el.parent().width() : 0;
+                //  el.removeClass(' d-none');
+                //btn.disabled = true;
+
+                $.animate(el, {
+                    right: maxLeft
+                }, 3000, "easeInOutElastic", function () {
+                    //el.addClass(' d-none');
+                    //btn.disabled = false;
+                    // alert('good');
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

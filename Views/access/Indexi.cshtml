@@ -1,0 +1,187 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="~/Content/assets/css/appstyle.css" rel="stylesheet" />
+    <style>
+        .mySwitch .check::after {
+            background: #ffffff !important;
+            border-color: #ffffff !important;
+        }
+
+        .mySwitch input[type="checkbox"]:checked ~ .check {
+            background: transparent !important;
+        }
+
+        .mySwitch input[type="checkbox"]:checked ~ .check::after {
+                border-color: #ffffff !important;
+                background: #ffffff !important;
+            }
+        .ANmenu > li {
+            margin: 2px !important;
+            padding: 0px !important;
+            display: inline-block;
+        }
+            .ANmenu > li > a {
+                color: white;
+            }
+
+       
+    </style>
+</head>
+<body class="bgView bg-overlay m4-cloak h-vh-100">
+    <div class="fixed-top p-5">
+        <div class="d-flex flex-justify-between-md flex-justify-center-fs flex-row-md flex-column-fs">
+            <a href="#" class="fg-white text-bold h4 mx-auto-fs mx-0-md mb-0" style="text-decoration:none">Appnetwork</a>
+            <ul class="ANmenu bg-transparent fg-white mx-auto-fs mx-0-md">
+                <li><a href="#">Sign-up</a></li>
+                <li><a href="#">| Sign-in</a> </li>
+            </ul>
+        </div>
+    </div>
+   
+    <div class="d-flex flex-column flex-justify-center h-100">
+
+        <div id="regWindow" data-role="window" data-icon="<span class='mif-user'></span>" data-gragabble="true" data-width="300" data-btn-max="false" data-btn-min="false"
+             data-height="400" data-place="center" class="p-3" data-title="Personal Account" data-custom-buttons="wANbutton">
+            <form id="pForm" action="#" method="post">
+                <input type="text" data-role="materialinput" placeholder="Enter your Surname" data-label="Surname" data-informer="Enter a valid email address">
+                <input type="text" data-role="materialinput" placeholder="Other names" data-label="Other names">
+                <input type="number" data-role="materialinput" placeholder="Phone number" data-label="Phone number">
+                <input type="number" data-role="materialinput" placeholder="Referer number" data-label="Referer number">
+                <input type="text" data-role="materialinput" placeholder="Email" data-label="Email">
+                <input type="text" data-role="materialinput" placeholder="Confirm Email" data-label="Confirm Email">
+                <select class="pt-3 matInput">
+                    <option class="fg-cyan">One</option>
+                    <option selected class="text-bold fg-red">Two</option>
+                    <option class="fg-green">Three</option>
+                </select>
+                <select class="pt-3 matInput">
+                    <option class="fg-cyan">One</option>
+                    <option selected class="text-bold fg-red">Gender</option>
+                    <option class="fg-green">Three</option>
+                </select>
+                <input data-role="datepicker" data-label="Date of Birth">
+                <input type="text" data-role="materialinput" placeholder="Occupation" data-label="Occupation">
+                <input type="text" data-role="materialinput" placeholder="Religion" data-label="Religion">
+                <select class="pt-3 matInput">
+                    <option class="fg-cyan">One</option>
+                    <option selected class="text-bold fg-red">Country</option>
+                    <option class="fg-green">Three</option>
+                </select>
+                <div class="clear pt-5">
+                    <button type="submit" class="button bg-red fg-white place-right">Submit</button>
+                </div>
+            </form>
+            <form id="bForm" action="#" method="post" style="display:none;">
+                <input type="number" data-role="materialinput" placeholder="Referer number" data-label="Referer number">
+                <input type="text" data-role="materialinput" placeholder="Enter your Business name" data-label="Business name" >
+                <input type="number" data-role="materialinput" placeholder="Phone number" data-label="Phone number">
+                <input type="text" data-role="materialinput" placeholder="Email" data-label="Email">
+                <input type="text" data-role="materialinput" placeholder="Confirm Email" data-label="Confirm Email">
+                <select class="pt-3 matInput">
+                    <option class="fg-cyan">One</option>
+                    <option selected class="text-bold fg-red">Business Type</option>
+                    <option class="fg-green">Three</option>
+                </select>
+                <select class="pt-3 matInput">
+                    <option class="fg-cyan">One</option>
+                    <option selected class="text-bold fg-red">Country</option>
+                    <option class="fg-green">Three</option>
+                </select>
+                <input type="text" data-role="materialinput" placeholder="Address" data-label="Address">
+                <input type="text" data-role="materialinput" placeholder="Religion" data-label="Religion">
+                
+                <div class="clear pt-5">
+                    <button type="submit" class="button bg-red fg-white place-right">Submit</button>
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div class="flex-self-center w-33-md">
+            <form id="dForm" action="#" method="post" stdyle="min-width: 30%;">
+                <div class="text-center fg-white">
+                    <img src="~/Content/assets/images/APNlogo.png" class="w-25" />
+                </div>
+                <div class="p-2 border mt-4 ml-5 mr-5 " style=" border-radius: 35px; background: rgba(255, 255, 255, 0.15);">
+                    <div class="d-flex flex-row fg-white">
+                        <span class="mif-user mif-2x pr-2"></span>
+                        <input class="fg-white w-100" name="text1" id="text1" type="text" value="" placeholder="Username" style="outline:none;border:none;background:transparent;">
+                    </div>
+                </div>
+                <div class="p-2 border mt-8 ml-5 mr-5" style=" border-radius: 35px; background: rgba(255, 255, 255, 0.15);">
+                    <div class="d-flex flex-row fg-white">
+                        <span class="mif-lock mif-2x pr-2"></span>
+                        <input class="fg-white w-100" name="text1" id="text1" type="text" value="" placeholder="Username" style="outline: none;  border: none;background: transparent;" required>
+                    </div>
+                </div>
+                <div class="text-center fg-white">
+                    <button class="button fg-white shadowed drop-shadow border-radius-20 bg-lightRed w-75 mt-8 ">Login</button>
+                </div>
+                <div class="clear fg-white mt-8 px-2-fs px-0-md">
+                    <input type="checkbox" class="place-left" data-role="switch" data-caption="Keep Logged In"
+                           data-cls-switch="mySwitch" data-cls-check="bd-white mySwitch">
+                    <a href="#" class="place-right fg-white mt-2" style="text-decoration: none">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+        <div class=" clear fg-white w-100  mb-5-md fixed-bottom">
+            <div class="d-flex flex-row place-left ">
+                <a href="#" class="fg-white mr-1" style="text-decoration: none">About Us</a> |
+                <a href="#" class="fg-white mr-1 ml-1" style="text-decoration: none">Privacy Policy</a>|
+                <a href="#" class="fg-white ml-1" style="text-decoration: none">Terms Of Use</a>
+            </div>
+            <div class="place-right text-center">© 2022. All Rights Reserved | Design By Appnetwork</div>
+        </div>
+    </div>
+    @*<button id="bnt"> java</button>*@
+
+    <script src="~/Content/assets/js/myScript.min.js"></script>
+    <script>
+        var wANbutton = [
+            {
+                html:"Business",
+                cls: "alert",
+                onclick:"if($(this).text()=='Business'){$(this).text('Personal');$('.title').text('Business Account');$('#pForm').hide();$('#bForm').show(true);}else{ $(this).text('Business');$('.title').text('Personal Account');$('#pForm').show();$('#bForm').hide();}"
+            }
+        ];
+
+
+
+        $(function () {
+           
+           
+
+            $('#bnt').on("click", function () {
+
+                var el = $("#dForm");
+                var startPos = parseInt(el.style("right"));
+                // alert(startPos);
+                var maxLeft = startPos === 0 ? el.parent().width() : 0;
+                //  el.removeClass(' d-none');
+                //btn.disabled = true;
+
+                $.animate(el, {
+                    right: maxLeft
+                }, 3000, "easeInOutElastic", function () {
+                    //el.addClass(' d-none');
+                    //btn.disabled = false;
+                    // alert('good');
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

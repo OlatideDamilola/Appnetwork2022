@@ -1,0 +1,278 @@
+﻿@{
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+<section class="container-fluid px-2 mt-3">
+    <div class="p-3 bg-white">
+        <p class="text-leader text-bold "><em>Adverts</em></p>
+        <div class="row">
+            <div class="cell-md-8">
+                <ul>
+                    <li>Be informed that Appnetwork charges <em class="text-bold">0.1USD</em> per user click on each advert you uploaded</li>
+                    <li>Your adverts will be randomly selected for display</li>
+                    <li>Remember to fix payable amount for your uploaded adverts to bridle your wallet expenditure</li>
+                    <li>Once the fixed payable amount is charged from your account, all uploaded adverts will cease to display</li>
+                </ul>
+            </div>
+            <div class="cell-md-4">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row flex-justify-between">
+                        <span class="flex-self-end">Fixed payable amount</span>
+                        <div class="d-flex flex-column p-2">
+                            <span class="text-secondary m-0 ">Advert Ballance</span>
+                            <span class="display1 m-0">$@ViewBag.walletBallence</span>
+                        </div>
+                        <div class="d-flex flex-column p-2">
+                            <span class="text-secondary m-0 ">Wallet Ballance</span>
+                            <span class="display1 m-0">$@ViewBag.walletBallence</span>
+                        </div>
+                    </div>
+                    <input type="number" placeholder="Fix payable amount" data-role="input" data-custom-buttons="customButtons" data-cls-custom-button="bg-gray fg-red" data-cls-component="input-large">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-3 bg-white mt-5">
+        <p class="text-bold"><em>Upload Advert</em></p>
+        <ul data-role="tabs" class="mt-2" data-expand="true" data-cls-tabs-list-item-active="fg-red">
+            <li><a href="#image"  class="text-bold">Image</a></li>
+            <li><a href="#video"  class="text-bold">Video</a></li>
+            <li><a href="#text"  class="text-bold">Text</a></li>
+        </ul>
+        <div class="tabs-targets">
+            <div id="image">
+                <div class="row">
+                    <div class="cell-md-8">
+                        <div style="max-height:350px; overflow:scroll;">
+                        <table class="table striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Activate</th>
+                                    <th>Delete</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Rice bag</td>
+                                    <td>
+                                        <input type="checkbox" data-role="checkbox" checked data-style="2">
+                                    </td>
+                                    <td>
+                                        <button><span class="mif-cross fg-red"></span></button>
+                                    </td>
+                                    <td>
+                                        <button><span class="mif-image mif-2x fg-darkBlue"></span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Rice bag</td>
+                                    <td>
+                                        <input type="checkbox" data-role="checkbox" checked data-style="2">
+                                    </td>
+                                    <td>
+                                        <button><span class="mif-cross fg-red"></span></button>
+                                    </td>
+                                    <td>
+                                        <button><span class="mif-image mif-2x fg-darkBlue"></span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Rice bag</td>
+                                    <td>
+                                        <input type="checkbox" data-role="checkbox" checked data-style="2">
+                                    </td>
+                                    <td>
+                                        <button><span class="mif-cross fg-red"></span></button>
+                                    </td>
+                                    <td>
+                                        <button><span class="mif-image mif-2x fg-darkBlue"></span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Ricebagdfsfsfdsdsd</td>
+                                    <td>
+                                        <input type="checkbox" data-role="checkbox" checked data-style="2">
+                                    </td>
+                                    <td>
+                                        <button><span class="mif-cross fg-red"></span></button>
+                                    </td>
+                                    <td>
+                                        <button><span class="mif-image mif-2x fg-darkBlue"></span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="cell-md-4">
+                        <input type="text" data-role="input" data-prepend="<strong>Title:</strong>">
+                        <input type="file" data-role="file" data-mode="drop">
+                    </div>
+                </div>
+            </div>
+            <div id="video">
+                <div class="row">
+                    <div class="cell-md-8">
+                        <div style="max-height:350px; overflow:scroll;">
+                            <table class="table striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Activate</th>
+                                        <th>Delete</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Rice bag</td>
+                                        <td>
+                                            <input type="checkbox" data-role="checkbox" checked data-style="2">
+                                        </td>
+                                        <td>
+                                            <button><span class="mif-cross fg-red"></span></button>
+                                        </td>
+                                        <td>
+                                            <button><span class="mif-video-camera mif-2x fg-darkBlue"></span></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Rice bag</td>
+                                        <td>
+                                            <input type="checkbox" data-role="checkbox" checked data-style="2">
+                                        </td>
+                                        <td>
+                                            <button><span class="mif-cross fg-red"></span></button>
+                                        </td>
+                                        <td>
+                                            <button><span class="mif-video-camera mif-2x fg-darkBlue"></span></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Rice bag</td>
+                                        <td>
+                                            <input type="checkbox" data-role="checkbox" checked data-style="2">
+                                        </td>
+                                        <td>
+                                            <button><span class="mif-cross fg-red"></span></button>
+                                        </td>
+                                        <td>
+                                            <button><span class="mif-video-camera mif-2x fg-darkBlue"></span></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Ricebagdfsfsfdsdsd</td>
+                                        <td>
+                                            <input type="checkbox" data-role="checkbox" checked data-style="2">
+                                        </td>
+                                        <td>
+                                            <button><span class="mif-cross fg-red"></span></button>
+                                        </td>
+                                        <td>
+                                            <button><span class="mif-video-camera mif-2x fg-darkBlue"></span></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="cell-md-4">
+                        <input type="text" data-role="input" data-prepend="<strong>Title:</strong>">
+                        <input type="file" data-role="file" data-mode="drop">
+                    </div>
+                </div>
+
+            </div>
+            <div id="text">Links</div>
+        </div>
+    </div>
+    <div class="mt-5 p-3 bg-white">
+        <p class="text-bold"><em>Advert Response</em></p>
+        <ul data-role="tabs" class="mt-2" data-expand="true" data-cls-tabs-list-item-active="fg-red">
+            <li><a href="#new" class="text-bold">New</a></li>
+            <li><a href="#read"  class="text-bold">Read</a></li>
+        </ul>
+        <div class="tabs-targets">
+            <div id="new">
+                <div data-role="accordion">
+                    <div class="frame">
+                        <div class="heading">Header 1</div>
+                        <div class="content">
+                            <div class="p-2">
+                                <div>
+                                    <div class="d-flex flex-row">
+                                        <img src="~/Content/assets/images/meme.jpg" class="border-radius-half bd-darkBlue border" style="height:25px;width:25px;z-index:1" />
+                                        <div>
+                                            <div class="ml-3-minus pl-5 bg-darkBlue d-flex flex-row flex-justify-between " style="height:25px">
+                                                <span class=" fg-white text-bold">Olusegun Bolanle</span>
+                                                <span class="mif-chevron-thin-down flex-self-center fg-white mx-2 bg-crimson" id="btDd"></span>
+                                            </div>
+                                            <div class="border-right-bottom-left bd-darkBlue" data-role="dropdown" data-toggle-element="#btDd">
+                                                <p class="p-2">
+                                                    fsdfsdf  fsdfsdffsd fsdffsdfsd ffsdfsdf <br />
+                                                    fsdfsdf  fsdfsdffsd fsdffsdfsd ffsdfsdf <br />
+                                                    fsdfsdf  fsdfsdffsd fsdffsdfsd ffsdfsdf <br />
+                                                    fsdfsdf  fsdfsdffsd fsdffsdfsd ffsdfsdf <br />
+                                                    fsdfsdf  fsdfsdffsd fsdffsdfsd ffsdfsdf <br />
+                                                </p>
+                                                <div class="d-flex border-top bd-darkBlue flex-row flex-justify-between">
+                                                    <button class="button">Delete</button>
+                                                    <button class="button">Mark read</button>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>                                       
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="frame active">
+                        <div class="heading">Header 2</div>
+                        <div class="content">
+                            <div class="p-2"></div>
+                        </div>
+                    </div>
+                    <div class="frame">
+                        <div class="heading">Header 3</div>
+                        <div class="content">
+                            <div class="p-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="read"></div>
+        </div>
+    </div>
+
+</section>
+<script src="~/Content/assets/js/myScript.min.js"></script>
+<script>
+    var customButtons = [
+        {
+            html: "<span class='mif-checkmark'></span>",
+            //cls: "alert",
+            onclick: "alert('You press user button')"
+        }
+    ]
+    $(function () {
+        $('<div class="mw-75" data-role="progress" data-cls-bar="bg-darkBlue" data-value="0" data-small="true"></div>').insertAfter('#image .drop-zone .files');
+        $('#image .drop-zone .caption').html('<strong>Choose</strong> an Image or <strong>drag</strong> it here');
+        $('<div class="mw-75" data-role="progress" data-cls-bar="bg-darkBlue" data-value="0" data-small="true"></div>').insertAfter('#video .drop-zone .files');
+        $('#video .drop-zone .caption').html('<strong>Choose</strong> a Video or <strong>drag</strong> it here');
+       // alert($('#home .caption').html());
+
+    });
+</script>

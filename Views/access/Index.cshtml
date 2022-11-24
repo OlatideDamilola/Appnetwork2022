@@ -1,0 +1,655 @@
+﻿@using Appnetwork2022.Models;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign-in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0077a3" />
+    <link href="~/Content/assets/css/appstyle.css" rel="stylesheet" />
+    <style>
+        .mySwitch .check::after {
+            background: #ffffff !important;
+            border-color: #ffffff !important;
+        }
+
+        .mySwitch input[type="checkbox"]:checked ~ .check {
+            background: transparent !important;
+        }
+
+            .mySwitch input[type="checkbox"]:checked ~ .check::after {
+                border-color: #ffffff !important;
+                background: #ffffff !important;
+            }
+
+        .ANmenu > li {
+            margin: 2px !important;
+            padding: 0px !important;
+            display: inline-block;
+        }
+
+            .ANmenu > li > a {
+                color: white;
+            }
+
+        .curvInp {
+            outline: none;
+            border: none;
+            background: transparent;
+        }
+
+      
+        .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+            .inputfile + label {
+                display: inline-block;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body class="bgView bg-overlay m4-cloak h-vh-100">
+    <div class="fixed-top p-5" style="z-index:1;">
+        <div class="d-flex flex-justify-between-md flex-justify-center-fs flex-row-md flex-column-fs">
+            <a href="#" class="fg-white text-bold h4 mx-auto-fs mx-0-md mb-0 noDeco">Appnetwork</a>
+            <ul class="ANmenu bg-transparent fg-white mx-auto-fs mx-0-md">
+                <li><a href="#" class="noDeco" onclick="Metro.window.toggle('#regWindow');">Sign-up</a></li>
+                <li><a href="#" class="noDeco" onclick="Metro.window.hide('#regWindow');">| Sign-in</a> </li>
+            </ul>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-justify-center h-100">
+        <div id="regWindow" data-role="window" data-icon="<span class='mif-user'></span>" data-gragabble="true" data-width="350" data-btn-max="false" data-btn-min="false"
+             data-height="400" class="p-2" data-place="top-left" data-title="Personal Account" data-cls-caption="bg-darkBlue" data-on-close-click="closeHandler">
+            <form id="pForm" action="\access\CreatePersonalAcct" data-interactive-check="true" method="post" data-role="validator" enctype="multipart/form-data">
+                <fieldset>
+                    <div class="d-flex flex-justify-center">
+                        <img src="~/Content/assets/images/avatar.png" id="pbx" style="height:223px;" />
+                    </div>
+                    <div class="d-flex flex-row">
+                        <input oninput="if(this.files[0].size>200000){alert('The size should not exceed 200kb'); }else pbx.src=window.URL.createObjectURL(this.files[0]);" type="file" id="fotoFile" name="fotoFile" class="inputfile" accept="image/*" />
+                        <label for="fotoFile" class="button bg-red fg-white" style="width:93%;"><i class="mif-upload2 mif-2x"></i>Upload Picture</label>
+                        <label class="button bg-darkRed fg-white" style="width:7%;"><span class="mif-replay mif-2x"></span></label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label class="text-muted">Referer code:</label>
+                    <input id="tbxRc" type="text" name="referralCode" class="input w-100 text-bold" value="@allConstant.baseReferenceCode" data-validate="length=8" placeholder="Referer code">
+                    <span class="invalid_feedback">Referer code lenght must be eight(8) </span>
+                    <label class="text-muted">Surname:</label>
+                    <input type="text" name="sName" class="input w-100" data-validate="required" placeholder="Surname">
+                    <label class="text-muted">Other names:</label>
+                    <input type="text" name="oName" class="input w-100" data-validate="required" placeholder="Other names">
+                    <label class="text-muted">Phone number:</label>
+                    <input type="number" name="pNum" class="input w-100" data-validate="required integer" placeholder="Phone number">
+
+                    <label class="text-muted">Email:</label>
+                    <input type="email" name="eMail" class="input w-100" data-validate="required email" placeholder="Email">
+                    <label class="text-muted">Confirm Email:</label>
+                    <input type="email" name="tbxcEmail" class="input w-100" data-validate="required compare=eMail" placeholder="Confirm Email">
+                    <label class="text-muted">Gender:</label>
+                    <select name="sex" data-validate="required not=-1" class=" pt-2 mb-3 select">
+                        <option value="-1" class="d-none"></option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <label class="text-muted">Date of Birth:</label>
+                    <input type="text" data-role="calendarpicker" name="Dob" data-clear-button="true" class="mb-2">
+                    @*<input data-role="datepicker" name="Dob" class="mb-2">*@
+                    <label class="text-muted">Occupation:</label>
+                    <input type="text" name="Occupation" class="input w-100" data-validate="required" placeholder="Occupation">
+                    <label class="text-muted">Religion:</label>
+                    <select name="religion" data-validate="required not=-1" class="pt-2 select">
+                        <option value="-1" class="d-none"></option>
+                        <option value="African Traditional & Diasporic">African Traditional & Diasporic</option>
+                        <option value="Agnostic">Agnostic</option>
+                        <option value="Atheist">Atheist</option>
+                        <option value="Baha'i">Baha'i</option>
+                        <option value="Buddhism">Buddhism</option>
+                        <option value="Cao Dai">Cao Dai</option>
+                        <option value="Chinese traditional religion">Chinese traditional religion</option>
+                        <option value="Christianity">Christianity</option>
+                        <option value="Hinduism">Hinduism</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Jainism">Jainism</option>
+                        <option value="Juche">Juche</option>
+                        <option value="Judaism">Judaism</option>
+                        <option value="Neo-Paganism">Neo-Paganism</option>
+                        <option value="Nonreligious">Nonreligious</option>
+                        <option value="Rastafarianism">Rastafarianism</option>
+                        <option value="Secular">Secular</option>
+                        <option value="Shinto">Shinto</option>
+                        <option value="Sikhism">Sikhism</option>
+                        <option value="Spiritism">Spiritism</option>
+                        <option value="Tenrikyo">Tenrikyo</option>
+                        <option value="Unitarian-Universalism">Unitarian-Universalism</option>
+                        <option value="Zoroastrianism">Zoroastrianism</option>
+                        <option value="primal-indigenous">primal-indigenous</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <label class="text-muted">Address:</label>
+                    <textarea name="Addrs" class="input" data-validate="required maxlength=255" placeholder="Address"></textarea>
+                    <label class="text-muted">City:</label>
+                    <input type="text" name="City" class="input w-100" data-validate="required" placeholder="City">
+                    <label class="text-muted">State:</label>
+                    <input type="text" name="State" class="input w-100" data-validate="required" placeholder="State">
+                    <label class="text-muted">Country:</label>
+                    <select name="Country" data-validate="required not=-1" class=" select">
+                        <option value="-1" class="d-none"></option>
+                        <option value="United States">United States</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Albania">Albania</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="American Samoa">American Samoa</option>
+                        <option value="Andorra">Andorra</option>
+                        <option value="Angola">Angola</option>
+                        <option value="Anguilla">Anguilla</option>
+                        <option value="Antarctica">Antarctica</option>
+                        <option value="Antigua">Antigua</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Armenia">Armenia</option>
+                        <option value="Aruba">Aruba</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Azerbaijani">Azerbaijani</option>
+                        <option value="Bahamas">Bahamas</option>
+                        <option value="Bahrain">Bahrain</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Barbados">Barbados</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Netherlands">Belgium</option>
+                        <option value="Belize">Belize</option>
+                        <option value="Benin">Benin</option>
+                        <option value="Bermuda">Bermuda</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Bolivia">Bolivia</option>
+                        <option value="Bosnia-Hercegovina">Bosnia-Hercegovina</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Bouvet Island">Bouvet Island</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="British IOT">British IOT</option>
+                        <option value="Brunei Darussalam">Brunei Darussalam</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Burkina Faso">Burkina Faso</option>
+                        <option value="Burundi">Burundi</option>
+                        <option value="Cambodia">Cambodia</option>
+                        <option value="Cameroon">Cameroon</option>
+                        <option value="Cape Verde">Cape Verde</option>
+                        <option value="Cayman Islands">Cayman Islands</option>
+                        <option value="Central African Rep">Central African Rep</option>
+                        <option value="Chad">Chad</option>
+                        <option value="Chile">Chile</option>
+                        <option value="China">China</option>
+                        <option value="Christmas Island">Christmas Island</option>
+                        <option value="Cocos Islands">Cocos Islands</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Comoros">Comoros</option>
+                        <option value="Congo">Congo</option>
+                        <option value="Cook Islands">Cook Islands</option>
+                        <option value="Costa Rica">Costa Rica</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Cyprus">Cyprus</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Djibouti">Djibouti</option>
+                        <option value="Dominica">Dominica</option>
+                        <option value="Dominican Republic">Dominican Republic</option>
+                        <option value="East Timor">East Timor</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="El Salvador">El Salvador</option>
+                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                        <option value="Eritrea">Eritrea</option>
+                        <option value="Estonia">Estonia</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Faeroe Islands">Faeroe Islands</option>
+                        <option value="Falkland Islands">Falkland Islands</option>
+                        <option value="Fiji">Fiji</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="French Guiana">French Guiana</option>
+                        <option value="French Polynesia">French Polynesia</option>
+                        <option value="French Southern">French Southern</option>
+                        <option value="French Southern Ter">French Southern Ter</option>
+                        <option value="Gabon">Gabon</option>
+                        <option value="Gambia">Gambia</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Gibraltar">Gibraltar</option>
+                        <option value="Greece">Greece</option>
+                        <option value="Greenland">Greenland</option>
+                        <option value="Grenada">Grenada</option>
+                        <option value="Guadeloupe">Guadeloupe</option>
+                        <option value="Guam">Guam</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Guinea">Guinea</option>
+                        <option value="Guinea-Bissau">Guinea-Bissau</option>
+                        <option value="Guyana">Guyana</option>
+                        <option value="Haiti">Haiti</option>
+                        <option value="Heard">Heard</option>
+                        <option value="Honduras">Honduras</option>
+                        <option value="Hong Kong">Hong Kong</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Iceland">Iceland</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Ivory Coast">Ivory Coast</option>
+                        <option value="Jamaica">Jamaica</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Jordan">Jordan</option>
+                        <option value="Kazakhstan">Kazakhstan</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Kiribati">Kiribati</option>
+                        <option value="Kuwait">Kuwait</option>
+                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                        <option value="Laos">Laos</option>
+                        <option value="Latvia">Latvia</option>
+                        <option value="Lebanon">Lebanon</option>
+                        <option value="Lesotho">Lesotho</option>
+                        <option value="Liberia">Liberia</option>
+                        <option value="Liechtenstein">Liechtenstein</option>
+                        <option value="Lithuania">Lithuania</option>
+                        <option value="Luxembourg">Luxembourg</option>
+                        <option value="Macau">Macau</option>
+                        <option value="Macedonia">Macedonia</option>
+                        <option value="Madagascar">Madagascar</option>
+                        <option value="Malawi">Malawi</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Maldives">Maldives</option>
+                        <option value="Mali">Mali</option>
+                        <option value="Malta">Malta</option>
+                        <option value="Marshall Islands">Marshall Islands</option>
+                        <option value="Martinique">Martinique</option>
+                        <option value="Mauritania">Mauritania</option>
+                        <option value="Mauritius">Mauritius</option>
+                        <option value="Mayotte">Mayotte</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Micronesia">Micronesia</option>
+                        <option value="MNP">MNP</option>
+                        <option value="Moldova">Moldova</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Mongolia">Mongolia</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Morocco">Morocco</option>
+                        <option value="Mozambique">Mozambique</option>
+                        <option value="Myanmar">Myanmar</option>
+                        <option value="Namibia">Namibia</option>
+                        <option value="Nauru">Nauru</option>
+                        <option value="Nepal">Nepal</option>
+                        <option value="NER">NER</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="Neutral Zone">Neutral Zone</option>
+                        <option value="New Caledonia">New Caledonia</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Nicaragua">Nicaragua</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Niue">Niue</option>
+                        <option value="Norfolk Island">Norfolk Island</option>
+                        <option value="North Korea">North Korea</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Oman">Oman</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Palau">Palau</option>
+                        <option value="Panama">Panama</option>
+                        <option value="Papua New Guinea">Papua New Guinea</option>
+                        <option value="Paraguay">Paraguay</option>
+                        <option value="Peru">Peru</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Pitcairn">Pitcairn</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Puerto Rico">Puerto Rico</option>
+                        <option value="Qatar">Qatar</option>
+                        <option value="Reunion">Reunion</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Rwanda">Rwanda</option>
+                        <option value="Saint Helena">Saint Helena</option>
+                        <option value="Saint Lucia">Saint Lucia</option>
+                        <option value="Saint Pierre">Saint Pierre</option>
+                        <option value="Saint Vincent">Saint Vincent</option>
+                        <option value="Samoa">Samoa</option>
+                        <option value="San Marino">San Marino</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="Scotland">Scotland</option>
+                        <option value="Senegal">Senegal</option>
+                        <option value="Seychelles">Seychelles</option>
+                        <option value="Sierra Leone">Sierra Leone</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Slovak Republic">Slovak Republic</option>
+                        <option value="Slovenia">Slovenia</option>
+                        <option value="Solomon Islands">Solomon Islands</option>
+                        <option value="Somali Democratic">Somali Democratic</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="South Georgia">South Georgia</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="St. Kitts and Nevis">St. Kitts and Nevis</option>
+                        <option value="STP">STP</option>
+                        <option value="Suriname">Suriname</option>
+                        <option value="Svalbard">Svalbard</option>
+                        <option value="Swaziland">Swaziland</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Syria">Syria</option>
+                        <option value="Taiwan">Taiwan</option>
+                        <option value="Tajikistan">Tajikistan</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="TCA">TCA</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Toga">Toga</option>
+                        <option value="Togolese">Togolese</option>
+                        <option value="Tokelau">Tokelau</option>
+                        <option value="Tongo">Tongo</option>
+                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                        <option value="Tunisia">Tunisia</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Turkmenistan">Turkmenistan</option>
+                        <option value="Tuvalu">Tuvalu</option>
+                        <option value="Uganda">Uganda</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab">United Arab</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Upper Volta">Upper Volta</option>
+                        <option value="Uruguay">Uruguay</option>
+                        <option value="USSR(Former)">USSR(Former)</option>
+                        <option value="Uzbekistan">Uzbekistan</option>
+                        <option value="Vanuatu">Vanuatu</option>
+                        <option value="Vatican City">Vatican City</option>
+                        <option value="Venezuela">Venezuela</option>
+                        <option value="VI, British">VI, British</option>
+                        <option value="Viet Nam">Viet Nam</option>
+                        <option value="Virgin Islands, USA">Virgin Islands, USA</option>
+                        <option value="Western Sahara">Western Sahara</option>
+                        <option value="WLF">WLF</option>
+                        <option value="Yemen">Yemen</option>
+                        <option value="Yugoslavia">Yugoslavia</option>
+                        <option value="Zaire">Zaire</option>
+                        <option value="Zambia">Zambia</option>
+                        <option value="Zimbabwe">Zimbabwe</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label class="text-muted">Account number:</label>
+                    <input type="number" name="acctNumber" class="input w-100" data-validate="required integer" placeholder="Account number">
+                    <label class="text-muted">Account name:</label>
+                    <input type="text" name="acctName" class="input w-100" data-validate="required" placeholder="Account name">
+                    <label class="text-muted">Bank name:</label>
+                    <select id="cbxBank" name="bankName" data-validate="required not=-1" class="select">
+                        <option value="-1" class="d-none"></option>
+                        <option value="-1" class="d-none"></option>
+                        <option value="120001">9mobile 9Payment Service Bank</option>
+                        <option value="">Abbey Mortage Bank</option>
+                        <option value="801">Abbey Mortgage Bank</option>
+                        <option value="51204">Above Only MFB</option>
+                        <option value="044">Access Bank</option>
+                        <option value="063">Access Bank (Diamond)</option>
+                        <option value="120004">Airtel Smartcash PSB</option>
+                        <option value="035A">ALAT by WEMA</option>
+                        <option value="50926">Amju Unique MFB</option>
+                        <option value="401">ASO Savings and Loans</option>
+                        <option value="MFB50094">Astrapolaris MFB LTD</option>
+                        <option value="51229">Bainescredit MFB</option>
+                        <option value="50931">Bowen Microfinance Bank</option>
+                        <option value="565">Carbon</option>
+                        <option value="50823">CEMCS Microfinance Bank</option>
+                        <option value="50171">Chanelle Microfinance Bank Limited</option>
+                        <option value="023">Citibank Nigeria</option>
+                        <option value="50204">Corestep MFB</option>
+                        <option value="559">Coronation Merchant Bank</option>
+                        <option value="050">Ecobank Nigeria</option>
+                        <option value="562">Ekondo Microfinance Bank</option>
+                        <option value="50126">Eyowo</option>
+                        <option value="070">Fidelity Bank</option>
+                        <option value="51314">Firmus MFB</option>
+                        <option value="011">First Bank of Nigeria</option>
+                        <option value="214">First City Monument Bank</option>
+                        <option value="501">FSDH Merchant Bank Limited</option>
+                        <option value="812">Gateway Mortgage Bank LTD</option>
+                        <option value="00103">Globus Bank</option>
+                        <option value="100022">GoMoney</option>
+                        <option value="058">Guaranty Trust Bank</option>
+                        <option value="51251">Hackman Microfinance Bank</option>
+                        <option value="50383">Hasal Microfinance Bank</option>
+                        <option value="030">Heritage Bank</option>
+                        <option value="120002">HopePSB</option>
+                        <option value="51244">Ibile Microfinance Bank</option>
+                        <option value="50457">Infinity MFB</option>
+                        <option value="301">Jaiz Bank</option>
+                        <option value="50502">Kadpoly MFB</option>
+                        <option value="082">Keystone Bank</option>
+                        <option value="50200">Kredi Money MFB LTD</option>
+                        <option value="50211">Kuda Bank</option>
+                        <option value="90052">Lagos Building Investment Company Plc.</option>
+                        <option value="50549">Links MFB</option>
+                        <option value="031">Living Trust Mortgage Bank</option>
+                        <option value="303">Lotus Bank</option>
+                        <option value="50563">Mayfair MFB</option>
+                        <option value="50304">Mint MFB</option>
+                        <option value="120003">MTN Momo PSB</option>
+                        <option value="100002">Paga</option>
+                        <option value="999991">PalmPay</option>
+                        <option value="104">Parallex Bank</option>
+                        <option value="311">Parkway - ReadyCash</option>
+                        <option value="999992">Paycom</option>
+                        <option value="50746">Petra Mircofinance Bank Plc</option>
+                        <option value="076">Polaris Bank</option>
+                        <option value="105">Premium Trust Bank</option>
+                        <option value="101">Providus Bank</option>
+                        <option value="51293">QuickFund MFB</option>
+                        <option value="502">Rand Merchant Bank</option>
+                        <option value="90067">Refuge Mortgage Bank</option>
+                        <option value="125">Rubies MFB</option>
+                        <option value="51113">Safe Haven MFB</option>
+                        <option value="50800">Solid Rock MFB</option>
+                        <option value="51310">Sparkle Microfinance Bank</option>
+                        <option value="221">Stanbic IBTC Bank</option>
+                        <option value="068">Standard Chartered Bank</option>
+                        <option value="51253">Stellas MFB</option>
+                        <option value="232">Sterling Bank</option>
+                        <option value="100">Suntrust Bank</option>
+                        <option value="302">TAJ Bank</option>
+                        <option value="51269">Tangerine Money</option>
+                        <option value="51211">TCF MFB</option>
+                        <option value="102">Titan Bank</option>
+                        <option value="50871">Unical MFB</option>
+                        <option value="032">Union Bank of Nigeria</option>
+                        <option value="033">United Bank For Africa</option>
+                        <option value="215">Unity Bank</option>
+                        <option value="566">VFD Microfinance Bank Limited</option>
+                        <option value="035">Wema Bank</option>
+                        <option value="057">Zenith Bank</option>
+                    </select>
+                    @* <input type="text" name="bankName" class="input w-100" data-validate="required" placeholder="Bank name">*@
+                </fieldset>
+                <fieldset>
+                    <label class="text-muted">Password:</label>
+                    <input type="text" class="fg-crimson input" name="Pword" data-validate="required minlenght=6" placeholder="Password">
+                    <span class="invalid_feedback">Password lenght cannot be less than Six(6)</span>
+                    <label class="text-muted">Confirm Password:</label>
+                    <input type="text" class="fg-crimson input" name="tbxcPword" data-validate="required minlenght=6 compare=Pword" placeholder="Confirm Password">
+                    <span class="invalid_feedback">Please confirm your Password again</span>
+                </fieldset>
+                <div class="remark alert">
+                    Please be informed that the informations you provided in the above Registration formed will be acepted as valid.
+                    Therefore Appnetwork Limited will not be responsible for any Denied/Declined/Failed transaction resulting from the above information provided by you.
+                </div>
+                <input type="checkbox" data-role="checkbox" class="mt-5-fs mb-5-fs m-0-md" onchange="doDig(this)" id="chkq" data-caption="<b>I Affirm that the above information provided by me is true and valid. I also agreed with the above Statement." data-style="2" />
+                 <div id="btnSubForm" class="clear pt-5" style="display: none">
+                        <button type="submit" class="button w-100 bg-red fg-white place-right">Submit</button>
+                    </div>
+                    @Html.AntiForgeryToken()
+            </form>
+        </div>
+
+
+        <div class="flex-self-center w-33-md">
+            <form action="\access\login" autocomplete="off" method="post" stdyle="min-width: 30%;">
+                <div class="text-center fg-white">
+                    <img src="~/Content/assets/images/APNlogo.png" class="w-25" />
+                </div>
+                <div class="p-2 border mt-4 ml-5 mr-5 " style=" border-radius: 35px; background: rgba(255, 255, 255, 0.15);">
+                    <div class="d-flex flex-row fg-white">
+                        <span class=" mif-phone mif-2x pr-2"></span>
+                        <input type="text" id="lPnum" class="fg-white w-100 curvInp" name="pNum" required placeholder="Phone number" value="">
+                    </div>
+                </div>
+                <div class="p-2 border mt-8 ml-5 mr-5" style="border-radius:35px; background: rgba(255, 255, 255, 0.15);">
+                    <div class="d-flex flex-row fg-white">
+                        <span class="mif-lock mif-2x pr-2"></span>
+                        <input type="password" id="lPword" class="fg-white w-100 curvInp" name="Pword" required placeholder="Password" value="">
+                    </div>
+                </div>
+                <div class="text-center fg-white">
+                    <button id="btnLogSub" type="submit" class="button fg-white shadowed drop-shadow border-radius-20 bg-lightRed w-75 mt-8">
+                        <span class="load-marker mif-loop2"></span>
+                        <span class="load-caption">Sign-in</span>
+                    </button>
+                </div>
+                <div class="clear fg-white mt-8 px-2-fs px-0-md">
+                    <input id="swBtn" type="checkbox" class="place-left" data-role="switch" data-on="Yes" data-off="No" data-show-on-off="true" data-caption="Keep Logged In"
+                           data-cls-switch="mySwitch" data-cls-check="bd-white mySwitch">
+                    <a href="#" class="place-right fg-white mt-2" style="text-decoration: none">Forgot Password?</a>
+                </div>
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="hdMsg" value="@ViewBag.msg" />
+            </form>
+            <div class="info-box" data-role="infobox" data-type="alert" data-auto-hide="15000">
+                <span class="button square closer"></span>
+                <div class="info-box-content">
+                    <h3>Notice</h3>
+                    <p id="msgCont"></p>
+                </div>
+            </div>
+        </div>
+        <div class=" clear fg-white w-100  mb-5-md fixed-bottom">
+            <div class="d-flex flex-row place-left">
+                <a href="#" class="fg-white mr-1" style="text-decoration: none">About Us</a> |
+                <a href="#" class="fg-white mr-1 ml-1" style="text-decoration: none">Privacy Policy</a>|
+                <a href="#" class="fg-white ml-1" style="text-decoration: none">Terms Of Use</a>
+            </div>
+            <div class="place-right text-center">© 2022. All Rights Reserved | Appnetwork</div>
+        </div>
+    </div>
+
+
+    <script src="~/Content/assets/js/myScript.min.js"></script>
+    <script>
+
+
+        function closeHandler() {
+            Metro.window.hide('#regWindow');
+            event.preventDefault();
+        }
+
+        function doDig(evt) { (evt.checked) ? $('#btnSubForm').show() : $('#btnSubForm').hide(); }
+
+        $(function () {
+            var keepLog = false;
+            var inMsg = $("#hdMsg").val();
+            var refInvCod = "@if (!string.IsNullOrWhiteSpace(new utilityFunct().safeReadAllType<string>(ViewBag.inVrefCod))) { @ViewBag.inVrefCod}";
+
+
+
+           
+            //var bankSel = Metro.getPlugin("#cbxBank", 'select');
+            //////alert('herer');
+            //$.get("/access/ReadContent/bank").then(function (response) {
+            //    alert(response.length);
+            //    for (i = 0; i < response.length; i++) {
+            //        alert( response[i]);
+            //    }
+            //  //  alert(JSON.parse(response));
+            //    //console.log(response);
+            //   // bankSel.data([]);
+            //    //$.each(response, function () {
+            //    //    alert(this);
+            //    //});
+            //    bankSel.data(response);
+            //});
+
+
+
+
+
+            //    if (v === 'empty') {
+            //        select.data([]);
+            //    } else {data-role=window
+
+            //    }
+
+
+
+            $('.window').height($('body').height() / 1.2);
+            if ($('body').width() > 700) $('.window').width($('body').width() / 2);
+
+
+            if (refInvCod != '') {
+                $('#tbxRc').val(refInvCod).prop('disabled', true);
+                Metro.window.show('#regWindow');
+            }else Metro.window.hide('#regWindow');
+
+            if (inMsg != "") { $("#msgCont").val(inMsg); $('.info-box').data('infobox').open(); }
+
+            $('[for] + label').click(function () {
+                $('[type=file]').val('');
+            });
+
+            //Metro.window.hide('[data-role=window]');
+
+            $('#swBtn').change(function () {
+                if ($(this).is(":checked")) keepLog = true; //alert('cj');
+                else keepLog = false; // alert('hhh');
+            })
+
+
+            $('#btnLogSub').click(function () {
+               // alert('herer');
+                var upcomb = $("#lPnum").val().trim() + '`' + $("#lPword").val().trim();
+                $('#btnLogSub').toggleClass('loading');
+                if (keepLog) Metro.storage.setItem("anpd", upcomb);
+            })
+
+
+
+
+
+            $('#bnt').on("click", function () {
+
+                var el = $("#dForm");
+                var startPos = parseInt(el.style("right"));
+                // alert(startPos);
+                var maxLeft = startPos === 0 ? el.parent().width() : 0;
+                //  el.removeClass(' d-none');
+                //btn.disabled = true;
+
+                $.animate(el, {
+                    right: maxLeft
+                }, 3000, "easeInOutElastic", function () {
+                    //el.addClass(' d-none');
+                    //btn.disabled = false;
+                    // alert('good');
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿
+@Model bPay;
+
+<div id="dbwindow" data-role="window" data-title="Dashboard" data-place="top-center" data-on-close-click="closeHandler(this)" data-shadow="true" data-drag-area="section" data-icon="<span class='mif-dashboard'></span>" data-gragabble="true" data-height="320" data-width="auto">
+    <ul data-role="tabs" data-tabs-type="group" data-expand="true">
+        <li><a href="#_fundWallet">Fund Wallet</a></li>
+        <li><a href="#_viewWallet">View Wallet</a></li>
+    </ul>
+    <div id="_fundWallet" class="p-5">
+        <form data-role="validator" data-interactive-check="true" method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+            <label>Enter the amount in <em class="text-bold">Dollar</em> and Local currency equivalence will be deducted from your bank account</label>
+            <input type="number" data-role="input" data-validate="required integer" data-prepend="Amount($):" />
+            <span class="invalid_feedback">Amount must be in digit!</span>
+            <input type="hidden" name="public_key" value="FLWPUBK_TEST-97df657bbcc8f09c90fe45b6d0010fdc-X" />
+            <input type="hidden" name="tx_ref" value="@Guid.NewGuid().ToString().Substring(3)" />
+            <input type="hidden" name="amount" value="100" @Model. />
+            <input type="hidden" name="currency" value="USD" />
+            <input type="hidden" name="redirect_url" value="http://localhost:1739/FluterwaveRedirect/handleRedirect" />
+            <input type="hidden" name="meta[token]" value="@Guid.NewGuid().ToString().Substring(3)" />
+            <input type="hidden" name="customer[name]" value="Olatuji Olufemi" />
+            <input type="hidden" name="customizations[description]" value="Fund your wallet" />
+            <input type="hidden" name="customizations[Title]" value="Users wallet" />
+            <input type="hidden" name="customer[email]" value="mailsfordammy@gmail.com" />
+            <button type="submit" class="command-button icon-right alert mt-5">
+                <span class="mif-versions icon"></span>
+                <span class="caption">
+                    Yes, Pay Now
+                    <small>Procceed to Payment</small>
+                </span>
+            </button>
+        </form>
+    </div>
+    <div id="_viewWallet">
+    </div>
+
+</div>

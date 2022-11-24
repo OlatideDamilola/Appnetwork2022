@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="theme-color" content="#0077a3" />
+    <link href="~/Content/assets/css/appstyle.css" rel="stylesheet" />
+    <style>
+        .tiles-group::before {
+            font-size: x-large;
+            padding-left: 5px;
+            color:white;
+            background:#004d6f;
+            padding-right:20px;
+            /*border-radius:0px 50px 50px 0px;*/
+            width:97%;
+        }
+    </style>
+</head>
+<<body class="m4-cloak">
+     <header class="fixed-top fg-white" style="z-index:1;">
+         <div class="d-flex flex-justify-between bg-darkBlue">
+             <div class="d-none-fs d-inline-md">
+                 <img src="~/Content/assets/images/APNlogo.png" style="max-width:80px;" />
+             </div>
+             <p class="pl-1-fs pl-0-md fg-white display1">Appnetwork</p>
+             <div class="p-2">
+
+                 <img src="~/Images/@ViewBag.pHoda.pixName" class="border-radius-half border border-2 bd-amber" style="width:60px;height:60px;" />
+                 <ul class="d-menu context drop-left" data-role="dropdown" data-toggle-element="#togMenu" style="z-index:30;">
+                     <li><a href="#"onclick="$('#mnHm').fire('click');" ><span class="mif-home icon"></span>Home</a></li>
+                     <li><a href="/Dashboard"><span class="mif-dashboard icon"></span>Dashboard</a></li>
+                     <li><a href="#" onclick="$('#mnAbt').fire('click');"><span class="mif-question icon"></span>About</a></li>
+
+                     <li class="divider bg-gray"></li>
+                     <li><a href="#" class="text-bold"><span class="mif-broadcast icon"></span>Shareholders</a></li>
+                     @if (!ViewBag.pHoda.isShareholder) {<text>
+                             <li><a href="#"  onclick="$('#mnJsh').fire('click');">Join Shareholders</a></li>
+                     </text>}
+                     <li><a href="#">Join Executives</a></li>
+                     <li><a href="#">Join Staffs</a></li>
+                     <li class="divider bg-gray"></li>
+                     <li><a href="#"><span class="mif-reply_all icon"></span>Feedback</a></li>
+                     <li><a href="#"><span class="mif-weather icon"></span>Charities grant</a></li>
+                     <li class="divider"></li>
+                     <li><a href="/Home/logout"><span class="mif-target icon"></span> LogOut</a></li>
+                 </ul>
+             </div>
+           
+         </div>
+
+         <ul data-role="tabs" data-cls-tabs="flex-justify-center text-bold d-block-md d-none-fs" data-expand-point="md">
+             <li><a id="mnHm" href="#_home"><span class="mif-home mif-2x fg-darkBlue"></span></a></li>
+             <li><a href="#">Admin</a></li>
+             <li><a id="mnAbt" href="#_about">About Us</a></li>
+             <li>
+                 <a href="#" class="dropdown-toggle"> Shareholders </a>
+                 <ul class="d-menu" data-role="dropdown">
+                     @if (!ViewBag.pHoda.isShareholder) {<text>
+                             <li><a id="mnJsh" href="#_shareH">Join Shareholders</a></li>
+                     </text>}
+                 @*<li><a href="#_shareH">Join Shareholders</a></li>*@
+                     <li><a href="#_target_4">Join Executives</a></li>
+                     <li><a href="#_target_4">Join Staffs</a></li>
+                 </ul>
+             </li>
+
+             <li><a href="#">Feedback</a></li>
+             <li><a href="#sss">Charities Grant</a></li>
+             <li>
+                 <a href="#" class="dropdown-toggle">
+                     Offices
+                     <span class="badge bg-red fg-white inside">1</span>
+                 </a>
+                 <ul class="d-menu" data-role="dropdown">
+                     <li><a href="#_target_4">Office 1</a></li>
+                     <li><a href="#_target_4">Office 2</a></li>
+                     <li><a href="#_target_4">Office 3</a></li>
+                     <li><a href="#_target_4">Office 4</a></li>
+                     <li><a href="#_target_4">Office 5</a></li>
+                 </ul>
+             </li>
+             <li><a href="/Dashboard" id="btndBoard">Dashboard</a></li>
+             <li><a href="/Home/logout" id="btndBoard">Logout</a></li>
+         </ul>
+
+
+         <div class="d-flex flex-justify-center bg-white">
+             <div class=" d-inline-fs d-none-md">
+                 <div class="d-flex flex-row">
+                     <a class="button"><span class="icon mif-home"></span><span class="badge bg-red fg-white">1</span></a>
+                     <a class="button"><span class="icon mif-home"></span><span class="badge bg-red fg-white">2</span></a>
+                     <a class="button"><span class="icon mif-home"></span><span class="badge bg-red fg-white">3</span></a>
+                     <a class="button"><span class="icon mif-home"></span><span class="badge bg-red fg-white">4</span></a>
+                     <a class="button"><span class="icon mif-home"></span><span class="badge bg-red fg-white">5</span></a>
+                     <a class="button"><span class="icon mif-home"></span><span class="badge bg-red fg-white">6</span></a>
+                     <a class="button"><span class="icon mif-home"></span><span class="badge bg-red fg-white">7</span></a>
+                     <a id="togMenu" class="button"><span class="icon mif-menu text-bold"></span></a>
+                 </div>
+             </div>
+            
+             @*<ul class="t-menu horizontal compact open d-none-md ">
+                <li class="mr-3"><a href="#"><span class="icon mif-home"></span><span class="badge bg-red fg-white">1</span></a></li>
+                <li class="mr-3"><a href="#"><span class="icon mif-home"></span><span class="badge bg-red fg-white">2</span></a></li>
+                <li class="mr-3"><a href="#"><span class="icon mif-home"></span><span class="badge bg-red fg-white">3</span></a></li>
+                <li class="mr-3"><a href="#"><span class="icon mif-home"></span><span class="badge bg-red fg-white">4</span></a></li>
+                <li class="mr-3"><a href="#"><span class="icon mif-home"></span><span class="badge bg-red fg-white">5</span></a></li>
+                <li class="ml-4" id="togMenu">
+                    <a href="#"><span class="icon mif-menu text-bold"></span></a>
+
+                </li>
+
+            </ul>*@
+
+         </div>
+     </header>
+
+    @RenderBody()
+
+    @*<script src="~/Content/assets/js/myScript.min.js"></script>*@
+    <script>
+        $(function () {
+            //$('#btnJshareholders').click(function () {
+            //    if ($(this).attr('data-canShow') == 'true') Metro.window.toggle('#shareHwindow');
+            //})
+
+            //$('#btndBoard').click(function () {
+            //    $('#dBoardInfo').data('infobox').open();
+            //})
+            
+
+
+
+            //Metro.charms.open("#chm");
+            $(".window").css("z-index", 99);
+            //Metro.bottomsheet.toggle('#bs', 'grid');
+
+        })
+    </script>
+</body>
+</html>
